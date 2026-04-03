@@ -216,21 +216,29 @@ body {
       <!-- <line x1="起点X" y1="起点Y" x2="终点X" y2="终点Y" stroke="#颜色" stroke-width="1.5" marker-end="url(#ah)" class="connection flow" /> -->
     </svg>
 
-    <!-- 图例（全部使用虚线样式，不带箭头） -->
-    <div class="legend" style="bottom:20px; right:40px">
-      <div class="legend-item">
-        <div class="legend-line" style="border-top:1.5px dashed #94a3b8"></div>
-        主流程
-      </div>
-      <div class="legend-item">
-        <div class="legend-line" style="border-top:1.5px dashed #059669"></div>
-        数据流
-      </div>
-      <div class="legend-item">
-        <div class="legend-line" style="border-top:1.5px dashed #2563eb"></div>
-        依赖
-      </div>
-    </div>
+    <!-- 图例（虚线 + 箭头） -->
+    <svg class="legend" style="position:absolute; bottom:20px; right:40px; width:280px; height:20px" viewBox="0 0 280 20">
+      <defs>
+        <marker id="leg-ah" markerWidth="5" markerHeight="4" refX="5" refY="2" orient="auto">
+          <polygon points="0 0, 5 2, 0 4" fill="#94a3b8" />
+        </marker>
+        <marker id="leg-ah-green" markerWidth="5" markerHeight="4" refX="5" refY="2" orient="auto">
+          <polygon points="0 0, 5 2, 0 4" fill="#059669" />
+        </marker>
+        <marker id="leg-ah-blue" markerWidth="5" markerHeight="4" refX="5" refY="2" orient="auto">
+          <polygon points="0 0, 5 2, 0 4" fill="#2563eb" />
+        </marker>
+      </defs>
+      <!-- 主流程 -->
+      <line x1="0" y1="10" x2="24" y2="10" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#leg-ah)" />
+      <text x="30" y="13" fill="#94a3b8" font-size="10">主流程</text>
+      <!-- 数据流 -->
+      <line x1="90" y1="10" x2="114" y2="10" stroke="#059669" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#leg-ah-green)" />
+      <text x="120" y="13" fill="#94a3b8" font-size="10">数据流</text>
+      <!-- 依赖 -->
+      <line x1="180" y1="10" x2="204" y2="10" stroke="#2563eb" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#leg-ah-blue)" />
+      <text x="210" y="13" fill="#94a3b8" font-size="10">依赖</text>
+    </svg>
 
   </div>
 </div>
@@ -259,7 +267,7 @@ resize();
    - `connection`：悬停时加粗 + 发光高亮
    - `flow`：流动动画
 3. **层级**：group(z-index:1) < svg(z-index:3) < box(z-index:5)
-4. **图例**：全部使用虚线样式 `border-top:1.5px dashed #颜色`，不带箭头
+4. **图例**：使用 SVG 绘制虚线 + 箭头，参考模板中的 legend 部分
 5. **分隔线**：标题下方添加灰色分隔线
 
 ## 锚点计算（关键！）
