@@ -1,5 +1,5 @@
 ---
-name: Architecture Diagram
+name: architecture-diagram
 description: This skill should be used when the user asks to "draw an architecture diagram", "create architecture diagram", "generate architecture", "画架构图", "生成架构图", "绘制架构图", or mentions architecture, microservice architecture, system architecture, deployment architecture, technology architecture, or needs to visualize system structure with components and connections.
 version: 1.0.0
 author: 李红彦
