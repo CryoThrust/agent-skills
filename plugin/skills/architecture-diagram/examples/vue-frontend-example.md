@@ -15,27 +15,6 @@
 
 ## Layout Planning
 
-### Layer Division
-
-| Layer | Top Range | Purpose |
-|-------|-----------|---------|
-| Title | 20-80px | Title |
-| Layer 1 | 90-200px | Entry, Router, Pages |
-| Spacing | 200-280px | Connection channel |
-| Layer 2 | 280-450px | State, API, Components |
-| Layer 3 | 460-560px | Utils, Build tools |
-
-### Column Division
-
-| Column | Left Range | Purpose |
-|--------|------------|---------|
-| Col 1 | 50-180px | User Entry |
-| Col 2 | 200-360px | Router |
-| Col 3 | 380-580px | Pages |
-| Col 4 | 600-800px | Components |
-| Col 5 | 820-960px | State/API |
-| Right | right:40px | Info cards |
-
 ### Group Coordinates
 
 | ID | Name | left | top | width | height | right | bottom |
@@ -48,18 +27,6 @@
 | G6 | API | 290 | 280 | 180 | 150 | 470 | 430 |
 | G7 | Utils | 510 | 280 | 200 | 150 | 710 | 430 |
 
-### Collision Check
-
-| Check | Calculation | Result |
-|-------|-------------|--------|
-| G1 vs G2 | 180 < 200 | OK, gap=20px |
-| G2 vs G3 | 360 < 380 | OK, gap=20px |
-| G3 vs G4 | 580 < 600 | OK, gap=20px |
-| G4 vs Right | 800 < 1140 | OK |
-| G5 vs G6 | 250 < 290 | OK, gap=40px |
-| G6 vs G7 | 470 < 510 | OK, gap=40px |
-| Row1 vs Row2 | 198 < 280 | OK, gap=82px |
-
 ### Component Coordinates
 
 | ID | Group | left | top | width | height |
@@ -69,22 +36,16 @@
 | C3 | G2 | 216 | 116 | 128 | 40 |
 | C4 | G2 | 216 | 160 | 128 | 32 |
 | C5 | G3 | 396 | 116 | 168 | 40 |
-| C6 | G3 | 396 | 160 | 80 | 32 |
-| C7 | G3 | 480 | 160 | 80 | 32 |
-| C8 | G4 | 616 | 116 | 168 | 40 |
-| C9 | G4 | 616 | 160 | 80 | 32 |
-| C10 | G4 | 700 | 160 | 80 | 32 |
+| C6 | G4 | 616 | 116 | 168 | 40 |
 
 ### Connection Planning
 
-| ID | From | To | Type | Color | Path |
-|----|------|-----|------|-------|------|
-| L1 | Entry | Router | Main Flow | Gray #94a3b8 | Direct horizontal |
-| L2 | Router | Pages | Main Flow | Gray #94a3b8 | Direct horizontal |
-| L3 | Pages | Components | Dependency | Blue #2563eb | Direct horizontal |
-| L4 | Pages | State | Data | Green #059669 | L-shape via (350, 240) |
-| L5 | Components | API | Dependency | Blue #2563eb | L-shape via (850, 240) |
-| L6 | State | API | Data | Green #059669 | Direct horizontal |
+| ID | From | To | 起点 | 终点 |
+|----|------|-----|------|------|
+| L1 | Entry(C1) | Router(C3) | C1右中(164,136) | C3左中(216,136) |
+| L2 | Router(C3) | Pages(C5) | C3右中(344,136) | C5左中(396,136) |
+| L3 | Pages(C5) | Components(C6) | C5右中(564,136) | C6左中(616,136) |
+| L4 | Pages(C5) | State | C5下中(480,156) → L型 → State上中(150,280) |
 
 ## Generated HTML
 
@@ -96,105 +57,132 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Vue 3 — 前端架构</title>
 <style>
-  :root {
-    --bg-page: #f3f4f6;
-    --bg-canvas: #ffffff;
-    --bg-box: #ffffff;
-    --bg-source: #f0fdfa;
-    --bg-dashed: #f8fafb;
-    --border: #d1d5db;
-    --border-source: #5eead4;
-    --text: #1e293b;
-    --text-dim: #64748b;
-    --text-tech: #94a3b8;
-  }
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { background: var(--bg-page); display: flex; justify-content: center; padding: 24px; }
+:root {
+  --bg-page: #f3f4f6;
+  --bg-canvas: #ffffff;
+  --bg-box: #ffffff;
+  --bg-source: #f0fdfa;
+  --bg-dashed: #f8fafb;
+  --border: #d1d5db;
+  --border-source: #5eead4;
+  --text: #1e293b;
+  --text-dim: #64748b;
+  --text-tech: #94a3b8;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: var(--bg-page); display: flex; justify-content: center; padding: 24px; }
 
-  .wrapper { width: 100%; max-width: 1480px; }
-  .canvas {
-    width: 1440px; height: 580px; position: relative;
-    background: var(--bg-canvas); border-radius: 12px; border: 1px solid var(--border);
-    font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'PingFang SC', sans-serif;
-    transform-origin: top left;
-  }
+.wrapper { width: 100%; max-width: 1480px; }
+.canvas {
+  width: 1440px; height: 580px; position: relative;
+  background: var(--bg-canvas); border-radius: 12px; border: 1px solid var(--border);
+  font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'PingFang SC', sans-serif;
+  transform-origin: top left;
+}
 
-  .box {
-    position: absolute; border: 1.5px solid var(--border); border-radius: 9px;
-    background: var(--bg-box); color: var(--text);
-    display: flex; flex-direction: column; align-items: center; justify-content: center;
-    font-size: 13px; font-weight: 600; text-align: center; padding: 4px 12px;
-  }
-  .box.source { background: var(--bg-source); border-color: var(--border-source); }
-  .box.dashed { border-style: dashed; border-color: #cbd5e1; background: var(--bg-dashed); font-weight: 500; }
-  .sub { font-size: 10px; color: var(--text-dim); font-weight: 400; margin-top: 2px; }
-  .tech { font-size: 9.5px; color: var(--text-tech); margin-top: 2px; }
+.box {
+  position: absolute; border: 1.5px solid var(--border); border-radius: 9px;
+  background: var(--bg-box); color: var(--text);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 600; text-align: center; padding: 4px 12px;
+  z-index: 5;
+}
+.box.source { background: var(--bg-source); border-color: var(--border-source); }
+.box.dashed { border-style: dashed; border-color: #cbd5e1; background: var(--bg-dashed); font-weight: 500; }
+.sub { font-size: 10px; color: var(--text-dim); font-weight: 400; margin-top: 2px; }
+.tech { font-size: 9.5px; color: var(--text-tech); margin-top: 2px; }
 
-  .group {
-    position: absolute; border: 1.5px dashed #cbd5e1; border-radius: 14px;
-    background: rgba(248, 250, 252, 0.6);
-  }
-  .tag {
-    position: absolute; top: -10px; left: 14px;
-    font-size: 9.5px; font-weight: 700; padding: 2px 10px; border-radius: 10px;
-    letter-spacing: 0.6px; text-transform: uppercase; color: #ffffff;
-  }
-  .tag.teal { background: #0d9488; }
-  .tag.red { background: #e11d48; }
-  .tag.green { background: #059669; }
-  .tag.orange { background: #d97706; }
-  .tag.blue { background: #2563eb; }
-  .tag.violet { background: #7c3aed; }
+.group {
+  position: absolute; border: 1.5px dashed #cbd5e1; border-radius: 14px;
+  background: rgba(248, 250, 252, 0.6);
+  z-index: 1;
+}
+.tag {
+  position: absolute; top: -10px; left: 14px;
+  font-size: 9.5px; font-weight: 700; padding: 2px 10px; border-radius: 10px;
+  letter-spacing: 0.6px; text-transform: uppercase; color: #ffffff;
+}
+.tag.teal { background: #0d9488; }
+.tag.blue { background: #2563eb; }
+.tag.green { background: #059669; }
+.tag.orange { background: #d97706; }
+.tag.violet { background: #7c3aed; }
 
-  .enclosure {
-    position: absolute; border: 1px solid #e2e8f0; border-radius: 18px;
-    background: rgba(236, 253, 245, 0.3);
-  }
-  .enclosure-label {
-    position: absolute; color: #059669; font-size: 9px; font-weight: 500;
-    font-family: 'SF Mono', 'Menlo', monospace;
-  }
+.enclosure {
+  position: absolute; border: 1px solid #e2e8f0; border-radius: 18px;
+  background: rgba(236, 253, 245, 0.3);
+}
+.enclosure-label {
+  position: absolute; color: #059669; font-size: 9px; font-weight: 500;
+  font-family: 'SF Mono', 'Menlo', monospace;
+}
 
-  .legend { position: absolute; display: flex; gap: 16px; }
-  .legend-item { display: flex; align-items: center; gap: 6px; color: #94a3b8; font-size: 10px; }
-  .legend-line { width: 24px; height: 0; }
+.legend { position: absolute; display: flex; gap: 16px; }
+.legend-item { display: flex; align-items: center; gap: 6px; color: #94a3b8; font-size: 10px; }
+.legend-line { width: 24px; height: 0; }
+
+/* 流动动画 */
+@keyframes flow {
+  0% { stroke-dashoffset: 16; }
+  100% { stroke-dashoffset: 0; }
+}
+.flow {
+  stroke-dasharray: 6 10;
+  animation: flow 2s linear infinite;
+}
+
+/* 悬停高亮 */
+.connection {
+  cursor: pointer;
+  stroke-width: 1.5px;
+  transition: stroke-width 0.2s, filter 0.2s;
+}
+.connection:hover {
+  stroke-width: 3px;
+  filter: drop-shadow(0 0 6px currentColor);
+}
 </style>
 </head>
 <body>
 <div class="wrapper">
   <div class="canvas" id="canvas">
 
+    <!-- 标题 -->
     <div style="position:absolute; top:22px; left:40px; color:#0f172a; font-size:17px; font-weight:700">
       Vue 3 <span style="color:#94a3b8; font-size:13px; font-weight:400; margin-left:10px">前端架构</span>
     </div>
 
-    <svg style="position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none" viewBox="0 0 1440 580">
+    <!-- 分隔线 -->
+    <div style="position:absolute; top:60px; left:40px; right:40px; height:1px; background:#e2e8f0"></div>
+
+    <!-- SVG 连线层 -->
+    <svg style="position:absolute; top:0; left:0; width:100%; height:100%; z-index:3" viewBox="0 0 1440 580">
       <defs>
-        <marker id="ah" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
-          <polygon points="0 0, 7 2.5, 0 5" fill="#94a3b8" />
+        <marker id="ah" markerWidth="5" markerHeight="4" refX="5" refY="2" orient="auto">
+          <polygon points="0 0, 5 2, 0 4" fill="#94a3b8" />
         </marker>
-        <marker id="ah-green" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
-          <polygon points="0 0, 7 2.5, 0 5" fill="#059669" />
+        <marker id="ah-green" markerWidth="5" markerHeight="4" refX="5" refY="2" orient="auto">
+          <polygon points="0 0, 5 2, 0 4" fill="#059669" />
         </marker>
-        <marker id="ah-blue" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
-          <polygon points="0 0, 7 2.5, 0 5" fill="#2563eb" />
-        </marker>
-        <marker id="ah-teal" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
-          <polygon points="0 0, 7 2.5, 0 5" fill="#0d9488" />
+        <marker id="ah-blue" markerWidth="5" markerHeight="4" refX="5" refY="2" orient="auto">
+          <polygon points="0 0, 5 2, 0 4" fill="#2563eb" />
         </marker>
       </defs>
-      <!-- Entry → Router: Main Flow (Gray) -->
-      <line x1="180" y1="136" x2="200" y2="136" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#ah)" />
-      <!-- Router → Pages: Main Flow (Gray) -->
-      <line x1="360" y1="136" x2="380" y2="136" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#ah)" />
-      <!-- Pages → Components: Dependency (Blue) -->
-      <line x1="580" y1="136" x2="600" y2="136" stroke="#2563eb" stroke-width="1.5" marker-end="url(#ah-blue)" />
-      <!-- Pages → State: Data flow (Green) via middle layer -->
-      <path d="M 480 198 L 480 240 L 150 240 L 150 280" stroke="#059669" stroke-width="1.2" stroke-dasharray="4,3" fill="none" marker-end="url(#ah-green)" />
-      <!-- Components → API: Dependency (Blue) via middle layer -->
-      <path d="M 700 198 L 700 240 L 380 240 L 380 280" stroke="#2563eb" stroke-width="1.2" stroke-dasharray="4,3" fill="none" marker-end="url(#ah-blue)" />
-      <!-- State → API: Data flow (Green) -->
-      <line x1="250" y1="355" x2="290" y2="355" stroke="#059669" stroke-width="1.2" stroke-dasharray="4,3" marker-end="url(#ah-green)" />
+
+      <!-- Entry(C1)右中 → Router(C3)左中 -->
+      <line x1="164" y1="136" x2="216" y2="136" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#ah)" class="connection flow" />
+
+      <!-- Router(C3)右中 → Pages(C5)左中 -->
+      <line x1="344" y1="136" x2="396" y2="136" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#ah)" class="connection flow" />
+
+      <!-- Pages(C5)右中 → Components(C6)左中 -->
+      <line x1="564" y1="136" x2="616" y2="136" stroke="#2563eb" stroke-width="1.5" marker-end="url(#ah-blue)" class="connection flow" />
+
+      <!-- Pages(C5)下中 → State上中：L型路径 -->
+      <path d="M 480 156 L 480 240 L 150 240 L 150 280" stroke="#059669" stroke-width="1.5" fill="none" marker-end="url(#ah-green)" class="connection flow" />
+
+      <!-- Components(C6)下中 → API上中：L型路径 -->
+      <path d="M 700 156 L 700 240 L 380 240 L 380 280" stroke="#2563eb" stroke-width="1.5" fill="none" marker-end="url(#ah-blue)" class="connection flow" />
     </svg>
 
     <!-- Entry Group -->
@@ -215,9 +203,7 @@
     <div class="box" style="left:216px; top:116px; width:128px; height:40px; border-color:#3b82f6">
       Vue Router<span class="sub">路由管理</span>
     </div>
-    <div class="box dashed" style="left:216px; top:160px; width:128px; height:32px">
-      Route Guard
-    </div>
+    <div class="box dashed" style="left:216px; top:160px; width:128px; height:32px">Route Guard</div>
 
     <!-- Pages Group -->
     <div class="group" style="left:380px; top:90px; width:200px; height:108px">
@@ -292,39 +278,35 @@
       </div>
     </div>
 
-    <!-- Legend -->
+    <!-- 图例（虚线，无箭头） -->
     <div class="legend" style="bottom:20px; right:40px">
-      <div class="legend-item"><div class="legend-line" style="border-top:1.5px solid #94a3b8"></div>页面跳转</div>
+      <div class="legend-item"><div class="legend-line" style="border-top:1.5px dashed #94a3b8"></div>页面跳转</div>
       <div class="legend-item"><div class="legend-line" style="border-top:1.5px dashed #059669"></div>状态流</div>
-      <div class="legend-item"><div class="legend-line" style="border-top:1.5px solid #2563eb"></div>组件引用</div>
+      <div class="legend-item"><div class="legend-line" style="border-top:1.5px dashed #2563eb"></div>组件引用</div>
     </div>
 
   </div>
 </div>
 <script>
-  function resize() {
-    const scale = Math.min(document.querySelector('.wrapper').clientWidth / 1440, 1);
-    document.querySelector('.canvas').style.transform = `scale(${scale})`;
-    document.querySelector('.wrapper').style.height = (580 * scale) + 'px';
-  }
-  window.addEventListener('resize', resize);
-  resize();
+function resize() {
+  const scale = Math.min(document.querySelector('.wrapper').clientWidth / 1440, 1);
+  document.querySelector('.canvas').style.transform = `scale(${scale})`;
+  document.querySelector('.wrapper').style.height = (580 * scale) + 'px';
+}
+window.addEventListener('resize', resize);
+resize();
 </script>
 </body>
 </html>
 ```
 
-## Pre-generation Checklist Results
+## Checklist
 
 ```
-[x] All group coordinates are multiples of 10
-[x] All component coordinates are multiples of 10
-[x] Same-row groups don't overlap, gap >= 20px
-[x] Components don't exceed group boundaries
-[x] Leftmost component left >= 40px
-[x] Rightmost group right (800) < 1140 (for right info area)
-[x] Topmost component top >= 80px
-[x] Right info cards don't overlap with main groups
-[x] Connections use defined anchor points
-[x] Connection colors match semantic meaning
+[x] 标题下方有灰色分隔线
+[x] 连线使用 class="connection flow"
+[x] SVG 没有 pointer-events:none
+[x] 图例使用虚线样式 dashed
+[x] 连线锚点在组件边缘（右中、左中、下中、上中）
+[x] z-index: group(1) < svg(3) < box(5)
 ```
