@@ -119,6 +119,7 @@
     background: var(--bg-box); color: var(--text);
     display: flex; flex-direction: column; align-items: center; justify-content: center;
     font-size: 13px; font-weight: 600; text-align: center; padding: 4px 12px;
+    z-index: 5;
   }
   .box.source { background: var(--bg-source); border-color: var(--border-source); }
   .box.dashed { border-style: dashed; border-color: #cbd5e1; background: var(--bg-dashed); font-weight: 500; }
@@ -128,6 +129,7 @@
   .group {
     position: absolute; border: 1.5px dashed #cbd5e1; border-radius: 14px;
     background: rgba(248, 250, 252, 0.6);
+    z-index: 1;
   }
   .tag {
     position: absolute; top: -10px; left: 14px;
@@ -153,6 +155,27 @@
   .legend { position: absolute; display: flex; gap: 16px; }
   .legend-item { display: flex; align-items: center; gap: 6px; color: #94a3b8; font-size: 10px; }
   .legend-line { width: 24px; height: 0; }
+
+  /* 流动动画 */
+  @keyframes flow {
+    0% { stroke-dashoffset: 16; }
+    100% { stroke-dashoffset: 0; }
+  }
+  .flow {
+    stroke-dasharray: 6 10;
+    animation: flow 2s linear infinite;
+  }
+
+  /* 悬停高亮 */
+  .connection {
+    cursor: pointer;
+    stroke-width: 1.5px;
+    transition: stroke-width 0.2s, filter 0.2s;
+  }
+  .connection:hover {
+    stroke-width: 3px;
+    filter: drop-shadow(0 0 6px currentColor);
+  }
 </style>
 </head>
 <body>
@@ -163,19 +186,35 @@
       Spring Cloud Alibaba <span style="color:#94a3b8; font-size:13px; font-weight:400; margin-left:10px">微服务架构</span>
     </div>
 
-    <svg style="position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none" viewBox="0 0 1440 620">
+    <!-- 分隔线 -->
+    <div style="position:absolute; top:60px; left:40px; right:40px; height:1px; background:#e2e8f0"></div>
+
+    <!-- SVG 连线层（注意：不要设置 pointer-events:none，否则悬停高亮无法生效） -->
+    <svg style="position:absolute; top:0; left:0; width:100%; height:100%; z-index:3" viewBox="0 0 1440 620">
       <defs>
-        <marker id="ah" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
-          <polygon points="0 0, 7 2.5, 0 5" fill="#94a3b8" />
+        <marker id="ah" markerWidth="5" markerHeight="4" refX="5" refY="2" orient="auto">
+          <polygon points="0 0, 5 2, 0 4" fill="#94a3b8" />
         </marker>
-        <marker id="ah-teal" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
-          <polygon points="0 0, 7 2.5, 0 5" fill="#0d9488" />
+        <marker id="ah-teal" markerWidth="5" markerHeight="4" refX="5" refY="2" orient="auto">
+          <polygon points="0 0, 5 2, 0 4" fill="#0d9488" />
+        </marker>
+        <marker id="ah-green" markerWidth="5" markerHeight="4" refX="5" refY="2" orient="auto">
+          <polygon points="0 0, 5 2, 0 4" fill="#059669" />
+        </marker>
+        <marker id="ah-red" markerWidth="5" markerHeight="4" refX="5" refY="2" orient="auto">
+          <polygon points="0 0, 5 2, 0 4" fill="#e11d48" />
+        </marker>
+        <marker id="ah-orange" markerWidth="5" markerHeight="4" refX="5" refY="2" orient="auto">
+          <polygon points="0 0, 5 2, 0 4" fill="#d97706" />
+        </marker>
+        <marker id="ah-violet" markerWidth="5" markerHeight="4" refX="5" refY="2" orient="auto">
+          <polygon points="0 0, 5 2, 0 4" fill="#7c3aed" />
         </marker>
       </defs>
-      <line x1="195" y1="140" x2="230" y2="140" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#ah)" />
-      <line x1="380" y1="140" x2="430" y2="140" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#ah)" />
-      <line x1="610" y1="140" x2="660" y2="140" stroke="#94a3b8" stroke-width="1.2" stroke-dasharray="4,3" marker-end="url(#ah)" />
-      <path d="M 305 188 L 305 210 Q 305 220, 315 220 L 870 220 Q 880 220, 880 210 L 880 158" stroke="#0d9488" stroke-width="1.2" stroke-dasharray="4,3" fill="none" marker-end="url(#ah-teal)" />
+      <line x1="195" y1="140" x2="230" y2="140" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#ah)" class="connection flow" />
+      <line x1="380" y1="140" x2="430" y2="140" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#ah)" class="connection flow" />
+      <line x1="610" y1="140" x2="660" y2="140" stroke="#059669" stroke-width="1.5" marker-end="url(#ah-green)" class="connection flow" />
+      <path d="M 305 188 L 305 210 Q 305 220, 315 220 L 870 220 Q 880 220, 880 210 L 880 158" stroke="#0d9488" stroke-width="1.5" fill="none" marker-end="url(#ah-teal)" class="connection flow" />
     </svg>
 
     <div class="box source" style="left:66px; top:116px; width:113px; height:48px">
@@ -254,12 +293,26 @@
       </div>
     </div>
 
-    <div class="legend" style="bottom:20px; right:40px">
-      <div class="legend-item"><div class="legend-line" style="border-top:1.5px solid #94a3b8"></div>请求流</div>
-      <div class="legend-item"><div class="legend-line" style="border-top:1.5px dashed #0d9488"></div>服务发现</div>
-      <div class="legend-item"><div class="legend-line" style="border-top:1.5px dashed #e11d48"></div>流量治理</div>
-      <div class="legend-item"><div class="legend-line" style="border-top:1.5px dashed #d97706"></div>事务</div>
-    </div>
+    <!-- 图例（虚线 + 箭头）- 放在标题右侧，使用 legend- 前缀避免 ID 冲突 -->
+    <svg class="legend" style="position:absolute; top:28px; right:40px; width:280px; height:20px; pointer-events:none" viewBox="0 0 280 20">
+      <defs>
+        <marker id="legend-ah" markerWidth="5" markerHeight="4" refX="5" refY="2" orient="auto">
+          <polygon points="0 0, 5 2, 0 4" fill="#94a3b8" />
+        </marker>
+        <marker id="legend-ah-teal" markerWidth="5" markerHeight="4" refX="5" refY="2" orient="auto">
+          <polygon points="0 0, 5 2, 0 4" fill="#0d9488" />
+        </marker>
+        <marker id="legend-ah-green" markerWidth="5" markerHeight="4" refX="5" refY="2" orient="auto">
+          <polygon points="0 0, 5 2, 0 4" fill="#059669" />
+        </marker>
+      </defs>
+      <line x1="0" y1="10" x2="24" y2="10" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#legend-ah)" />
+      <text x="30" y="13" fill="#94a3b8" font-size="10">请求流</text>
+      <line x1="90" y1="10" x2="114" y2="10" stroke="#0d9488" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#legend-ah-teal)" />
+      <text x="120" y="13" fill="#94a3b8" font-size="10">服务发现</text>
+      <line x1="180" y1="10" x2="204" y2="10" stroke="#059669" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#legend-ah-green)" />
+      <text x="210" y="13" fill="#94a3b8" font-size="10">数据流</text>
+    </svg>
 
   </div>
 </div>
@@ -276,16 +329,17 @@
 </html>
 ```
 
-## Pre-generation Checklist Results
+## Checklist
 
 ```
+[x] 标题下方有灰色分隔线
+[x] 连线使用 class="connection flow"
+[x] SVG 连线层没有 pointer-events:none
+[x] 图例使用虚线样式 + 箭头
+[x] 图例放在标题右侧，有 pointer-events:none
+[x] 连线锚点在组件边缘
+[x] z-index: group(1) < svg(3) < box(5)
 [x] All group coordinates are multiples of 10
-[x] All component coordinates are multiples of 10
 [x] Same-row groups don't overlap, gap >= 30px
-[x] Components don't exceed group boundaries
-[x] Leftmost component left >= 40px
 [x] Rightmost group right (960) < 1140 (for right info area)
-[x] Topmost component top >= 80px
-[x] Right info cards don't overlap with main groups
-[x] Connections use defined anchor points
 ```

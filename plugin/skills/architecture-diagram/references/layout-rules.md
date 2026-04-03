@@ -112,6 +112,8 @@ A右中(X1,Y1) → 水平向右 → (X2,Y1) → 垂直 → (X2,Y2) → 水平向
 
 ## Legend Rules
 
+- 位置：标题右侧（top:28px, right:40px）
+- 必须添加 `pointer-events:none` 避免阻挡连线悬停
 - 只显示实际使用的连线类型
 - 颜色必须与连线 stroke 一致
 - 标签根据架构类型适配（见 style-guide.md）

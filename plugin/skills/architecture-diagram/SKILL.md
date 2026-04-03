@@ -165,6 +165,8 @@ A右中 → 向右水平延伸 → 拐点1 → 垂直向下/向上 → 拐点2 �
 group(z-index:1) < svg(z-index:3) < box(z-index:5)
 
 #### 图例规则
+- 位置：标题右侧（top:28px, right:40px）
+- 必须添加 `pointer-events:none` 避免阻挡连线悬停
 - 只显示实际使用的连线类型
 - 颜色必须与连线 stroke 颜色一致
 - 标签根据架构类型适配

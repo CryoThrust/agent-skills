@@ -278,8 +278,8 @@ body { background: var(--bg-page); display: flex; justify-content: center; paddi
       </div>
     </div>
 
-    <!-- 图例（虚线 + 箭头）- 独立 SVG，使用 legend- 前缀避免 ID 冲突 -->
-    <svg class="legend" style="position:absolute; bottom:20px; right:40px; width:280px; height:20px" viewBox="0 0 280 20">
+    <!-- 图例（虚线 + 箭头）- 放在标题右侧，使用 legend- 前缀避免 ID 冲突 -->
+    <svg class="legend" style="position:absolute; top:28px; right:40px; width:280px; height:20px; pointer-events:none" viewBox="0 0 280 20">
       <defs>
         <marker id="legend-ah" markerWidth="5" markerHeight="4" refX="5" refY="2" orient="auto">
           <polygon points="0 0, 5 2, 0 4" fill="#94a3b8" />
@@ -319,8 +319,9 @@ resize();
 ```
 [x] 标题下方有灰色分隔线
 [x] 连线使用 class="connection flow"
-[x] SVG 没有 pointer-events:none
-[x] 图例使用虚线样式 dashed
+[x] SVG 连线层没有 pointer-events:none
+[x] 图例使用虚线样式 + 箭头
+[x] 图例放在标题右侧，有 pointer-events:none
 [x] 连线锚点在组件边缘（右中、左中、下中、上中）
 [x] z-index: group(1) < svg(3) < box(5)
 ```
