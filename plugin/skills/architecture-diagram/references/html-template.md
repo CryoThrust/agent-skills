@@ -223,25 +223,25 @@ body {
 /* ========== 连线流动动画 ========== */
 @keyframes flow {
   to {
-    stroke-dashoffset: -20;
+    stroke-dashoffset: -16;
   }
 }
 
 /* 流动效果类 - 添加到 line 或 path 元素 */
 .flow {
-  stroke-dasharray: 8 4;
-  animation: flow 0.6s linear infinite;
+  stroke-dasharray: 8 8;
+  animation: flow 1.5s linear infinite;
 }
 
 /* 不同速度的流动效果 */
 .flow-slow {
-  stroke-dasharray: 12 6;
-  animation: flow 1s linear infinite;
+  stroke-dasharray: 10 10;
+  animation: flow 2.5s linear infinite;
 }
 
 .flow-fast {
-  stroke-dasharray: 6 3;
-  animation: flow 0.4s linear infinite;
+  stroke-dasharray: 6 6;
+  animation: flow 1s linear infinite;
 }
 </style>
 </head>
@@ -333,14 +333,19 @@ body {
     </div> -->
 
     <!-- ========== 图例 ========== -->
+    <!-- 图例必须与实际连线颜色一致，根据使用的连线类型动态生成 -->
     <div class="legend" style="bottom:20px; right:40px">
       <div class="legend-item">
         <div class="legend-line" style="border-top:1.5px solid #94a3b8"></div>
-        请求流
+        主流程
       </div>
       <div class="legend-item">
-        <div class="legend-line" style="border-top:1.5px dashed #0d9488"></div>
-        服务发现
+        <div class="legend-line" style="border-top:1.5px solid #059669"></div>
+        数据流
+      </div>
+      <div class="legend-item">
+        <div class="legend-line" style="border-top:1.5px solid #2563eb"></div>
+        依赖
       </div>
     </div>
 
@@ -428,9 +433,9 @@ resize();
 
 | 类名 | 效果 | 适用场景 |
 |-----|------|---------|
-| `flow` | 标准流动（0.6s） | 大多数连线 |
-| `flow-slow` | 慢速流动（1s） | 长连线、次要流程 |
-| `flow-fast` | 快速流动（0.4s） | 短连线、主要流程 |
+| `flow` | 标准流动（1.5s） | 大多数连线 |
+| `flow-slow` | 慢速流动（2.5s） | 长连线、次要流程 |
+| `flow-fast` | 快速流动（1s） | 短连线、主要流程 |
 
 **使用示例：**
 ```html
@@ -442,3 +447,32 @@ resize();
 ```
 
 **注意：** 添加 `class="flow"` 后会自动应用 `stroke-dasharray`，无需再手动设置。
+
+### 6. 图例生成规则
+
+**重要：图例必须与实际连线颜色和标签完全对应！**
+
+生成图例时遵循以下规则：
+
+1. **只显示实际使用的连线类型** - 不要显示未使用的类型
+2. **颜色必须匹配** - 图例颜色 = 实际连线 stroke 颜色
+3. **标签适配架构类型**：
+
+| 连线颜色 | 通用标签 | Vue/React | 微服务 | 后端分层 |
+|---------|---------|-----------|--------|---------|
+| #94a3b8 (灰) | 主流程 | 页面跳转 | 请求流 | API调用 |
+| #059669 (绿) | 数据流 | 状态流 | 数据访问 | 数据流 |
+| #2563eb (蓝) | 依赖 | 组件引用 | 服务调用 | 模块依赖 |
+| #0d9488 (青) | 配置 | Store | 服务发现 | 配置 |
+| #e11d48 (红) | 控制 | 路由守卫 | 流量治理 | 权限 |
+| #7c3aed (紫) | 事件 | EventEmitter | 消息 | 异步事件 |
+
+**图例 HTML 模板：**
+```html
+<div class="legend" style="bottom:20px; right:40px">
+  <div class="legend-item">
+    <div class="legend-line" style="border-top:1.5px solid #颜色"></div>
+    标签文字
+  </div>
+</div>
+```
