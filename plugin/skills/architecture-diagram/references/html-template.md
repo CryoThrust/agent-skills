@@ -222,26 +222,14 @@ body {
 
 /* ========== 连线流动动画 ========== */
 @keyframes flow {
-  to {
-    stroke-dashoffset: -16;
-  }
+  0% { stroke-dashoffset: 16; }
+  100% { stroke-dashoffset: 0; }
 }
 
 /* 流动效果类 - 添加到 line 或 path 元素 */
 .flow {
-  stroke-dasharray: 8 8;
-  animation: flow 1.5s linear infinite;
-}
-
-/* 不同速度的流动效果 */
-.flow-slow {
-  stroke-dasharray: 10 10;
-  animation: flow 2.5s linear infinite;
-}
-
-.flow-fast {
-  stroke-dasharray: 6 6;
-  animation: flow 1s linear infinite;
+  stroke-dasharray: 6 10;
+  animation: flow 2s linear infinite;
 }
 </style>
 </head>
@@ -253,47 +241,6 @@ body {
     <div style="position:absolute; top:22px; left:40px; color:#0f172a; font-size:17px; font-weight:700">
       {架构名称} <span style="color:#94a3b8; font-size:13px; font-weight:400; margin-left:10px">{副标题}</span>
     </div>
-
-    <!-- ========== SVG 连线层 ========== -->
-    <svg style="position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none" viewBox="0 0 1440 900">
-      <defs>
-        <!-- 箭头标记 -->
-        <marker id="ah" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
-          <polygon points="0 0, 7 2.5, 0 5" fill="#94a3b8" />
-        </marker>
-        <marker id="ah-teal" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
-          <polygon points="0 0, 7 2.5, 0 5" fill="#0d9488" />
-        </marker>
-        <marker id="ah-green" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
-          <polygon points="0 0, 7 2.5, 0 5" fill="#059669" />
-        </marker>
-        <marker id="ah-blue" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
-          <polygon points="0 0, 7 2.5, 0 5" fill="#2563eb" />
-        </marker>
-        <marker id="ah-red" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
-          <polygon points="0 0, 7 2.5, 0 5" fill="#e11d48" />
-        </marker>
-        <marker id="ah-orange" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
-          <polygon points="0 0, 7 2.5, 0 5" fill="#d97706" />
-        </marker>
-        <marker id="ah-violet" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
-          <polygon points="0 0, 7 2.5, 0 5" fill="#7c3aed" />
-        </marker>
-      </defs>
-
-      <!-- 连线示例：水平线 -->
-      <!-- <line x1="起点X" y1="起点Y" x2="终点X" y2="终点Y" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#ah)" /> -->
-
-      <!-- 连线示例：带流动效果的线 -->
-      <!-- <line x1="起点X" y1="起点Y" x2="终点X" y2="终点Y" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#ah)" class="flow" /> -->
-
-      <!-- 连线示例：带拐点的路径 -->
-      <!-- <path d="M 起点X 起点Y L 拐点X 拐点Y L 终点X 终点Y" stroke="#0d9488" stroke-width="1.2" stroke-dasharray="4,3" fill="none" marker-end="url(#ah-teal)" /> -->
-
-      <!-- 连线示例：带流动效果的路径 -->
-      <!-- <path d="M 起点X 起点Y L 拐点X 拐点Y L 终点X 终点Y" stroke="#0d9488" stroke-width="1.2" fill="none" marker-end="url(#ah-teal)" class="flow" /> -->
-
-    </svg>
 
     <!-- ========== 组件区域 ========== -->
 
@@ -331,6 +278,41 @@ body {
         </div>
       </div>
     </div> -->
+
+    <!-- ========== SVG 连线层（放在组件之后，确保线条在组件上方） ========== -->
+    <svg style="position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:10" viewBox="0 0 1440 900">
+      <defs>
+        <!-- 箭头标记 -->
+        <marker id="ah" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+          <polygon points="0 0, 7 2.5, 0 5" fill="#94a3b8" />
+        </marker>
+        <marker id="ah-teal" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+          <polygon points="0 0, 7 2.5, 0 5" fill="#0d9488" />
+        </marker>
+        <marker id="ah-green" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+          <polygon points="0 0, 7 2.5, 0 5" fill="#059669" />
+        </marker>
+        <marker id="ah-blue" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+          <polygon points="0 0, 7 2.5, 0 5" fill="#2563eb" />
+        </marker>
+        <marker id="ah-red" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+          <polygon points="0 0, 7 2.5, 0 5" fill="#e11d48" />
+        </marker>
+        <marker id="ah-orange" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+          <polygon points="0 0, 7 2.5, 0 5" fill="#d97706" />
+        </marker>
+        <marker id="ah-violet" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+          <polygon points="0 0, 7 2.5, 0 5" fill="#7c3aed" />
+        </marker>
+      </defs>
+
+      <!-- 连线示例：带流动效果的线 -->
+      <!-- <line x1="起点X" y1="起点Y" x2="终点X" y2="终点Y" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#ah)" class="flow" /> -->
+
+      <!-- 连线示例：带拐点的路径 -->
+      <!-- <path d="M 起点X 起点Y L 拐点X 拐点Y L 终点X 终点Y" stroke="#0d9488" stroke-width="1.2" fill="none" marker-end="url(#ah-teal)" class="flow" /> -->
+
+    </svg>
 
     <!-- ========== 图例 ========== -->
     <!-- 图例必须与实际连线颜色一致，根据使用的连线类型动态生成 -->
@@ -429,24 +411,16 @@ resize();
 
 ### 5. 流动动画效果
 
-连线支持流动动画效果，只需添加 CSS 类：
+连线支持流动动画效果，只需添加 `class="flow"`：
 
-| 类名 | 效果 | 适用场景 |
-|-----|------|---------|
-| `flow` | 标准流动（1.5s） | 大多数连线 |
-| `flow-slow` | 慢速流动（2.5s） | 长连线、次要流程 |
-| `flow-fast` | 快速流动（1s） | 短连线、主要流程 |
-
-**使用示例：**
 ```html
-<!-- 带流动效果的线 -->
 <line ... class="flow" />
-
-<!-- 带流动效果的路径 -->
 <path ... class="flow" />
 ```
 
-**注意：** 添加 `class="flow"` 后会自动应用 `stroke-dasharray`，无需再手动设置。
+**动画效果**：2秒平滑循环流动，无卡顿感。
+
+**注意：** 添加 `class="flow"` 后会自动应用 `stroke-dasharray`，无需手动设置。
 
 ### 6. 图例生成规则
 

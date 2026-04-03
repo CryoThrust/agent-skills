@@ -308,11 +308,7 @@ Follow coordinate, spacing, and capacity rules defined in `references/layout-rul
 <path d="M ..." stroke="#0d9488" stroke-width="1.2" fill="none" marker-end="url(#ah-teal)" class="flow" />
 ```
 
-| 类名 | 速度 | 适用场景 |
-|-----|------|---------|
-| `flow` | 1.5s | 标准流动 |
-| `flow-slow` | 2.5s | 长连线、次要流程 |
-| `flow-fast` | 1s | 短连线、主要流程 |
+**动画效果**：2秒平滑循环流动，无卡顿
 
 #### 连线生成要求
 
