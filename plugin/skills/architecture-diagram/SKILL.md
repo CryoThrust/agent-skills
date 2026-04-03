@@ -296,6 +296,24 @@ Follow coordinate, spacing, and capacity rules defined in `references/layout-rul
 </defs>
 ```
 
+#### 连线流动动画
+
+模板已内置流动动画 CSS，只需添加 `class="flow"` 即可：
+
+```html
+<!-- 带流动效果的线 -->
+<line x1="X1" y1="Y1" x2="X2" y2="Y2" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#ah)" class="flow" />
+
+<!-- 带流动效果的路径 -->
+<path d="M ..." stroke="#0d9488" stroke-width="1.2" fill="none" marker-end="url(#ah-teal)" class="flow" />
+```
+
+| 类名 | 速度 | 适用场景 |
+|-----|------|---------|
+| `flow` | 0.6s | 标准流动 |
+| `flow-slow` | 1s | 长连线、次要流程 |
+| `flow-fast` | 0.4s | 短连线、主要流程 |
+
 #### 连线生成要求
 
 **Step 6 已经定义了锚点和路径规则，生成 HTML 时必须：**

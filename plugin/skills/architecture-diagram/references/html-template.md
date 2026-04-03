@@ -219,6 +219,30 @@ body {
   width: 24px;
   height: 0;
 }
+
+/* ========== 连线流动动画 ========== */
+@keyframes flow {
+  to {
+    stroke-dashoffset: -20;
+  }
+}
+
+/* 流动效果类 - 添加到 line 或 path 元素 */
+.flow {
+  stroke-dasharray: 8 4;
+  animation: flow 0.6s linear infinite;
+}
+
+/* 不同速度的流动效果 */
+.flow-slow {
+  stroke-dasharray: 12 6;
+  animation: flow 1s linear infinite;
+}
+
+.flow-fast {
+  stroke-dasharray: 6 3;
+  animation: flow 0.4s linear infinite;
+}
 </style>
 </head>
 <body>
@@ -260,8 +284,14 @@ body {
       <!-- 连线示例：水平线 -->
       <!-- <line x1="起点X" y1="起点Y" x2="终点X" y2="终点Y" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#ah)" /> -->
 
+      <!-- 连线示例：带流动效果的线 -->
+      <!-- <line x1="起点X" y1="起点Y" x2="终点X" y2="终点Y" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#ah)" class="flow" /> -->
+
       <!-- 连线示例：带拐点的路径 -->
       <!-- <path d="M 起点X 起点Y L 拐点X 拐点Y L 终点X 终点Y" stroke="#0d9488" stroke-width="1.2" stroke-dasharray="4,3" fill="none" marker-end="url(#ah-teal)" /> -->
+
+      <!-- 连线示例：带流动效果的路径 -->
+      <!-- <path d="M 起点X 起点Y L 拐点X 拐点Y L 终点X 终点Y" stroke="#0d9488" stroke-width="1.2" fill="none" marker-end="url(#ah-teal)" class="flow" /> -->
 
     </svg>
 
@@ -377,6 +407,11 @@ resize();
 <line x1="X1" y1="Y1" x2="X2" y2="Y2" stroke="#0d9488" stroke-width="1.2" stroke-dasharray="4,3" marker-end="url(#ah-teal)" />
 ```
 
+**带流动效果的线** - 添加 `class="flow"` 即可
+```html
+<line x1="X1" y1="Y1" x2="X2" y2="Y2" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#ah)" class="flow" />
+```
+
 **带拐点的路径**
 ```html
 <path d="M 起点X 起点Y L 拐点X 拐点Y L 终点X 终点Y" stroke="#颜色" stroke-width="1.2" stroke-dasharray="4,3" fill="none" marker-end="url(#箭头)" />
@@ -386,3 +421,24 @@ resize();
 ```html
 <path d="M X1 Y1 Q 控制点X 控制点Y X2 Y2" stroke="#颜色" stroke-width="1.2" stroke-dasharray="4,3" fill="none" marker-end="url(#箭头)" />
 ```
+
+### 5. 流动动画效果
+
+连线支持流动动画效果，只需添加 CSS 类：
+
+| 类名 | 效果 | 适用场景 |
+|-----|------|---------|
+| `flow` | 标准流动（0.6s） | 大多数连线 |
+| `flow-slow` | 慢速流动（1s） | 长连线、次要流程 |
+| `flow-fast` | 快速流动（0.4s） | 短连线、主要流程 |
+
+**使用示例：**
+```html
+<!-- 带流动效果的线 -->
+<line ... class="flow" />
+
+<!-- 带流动效果的路径 -->
+<path ... class="flow" />
+```
+
+**注意：** 添加 `class="flow"` 后会自动应用 `stroke-dasharray`，无需再手动设置。
