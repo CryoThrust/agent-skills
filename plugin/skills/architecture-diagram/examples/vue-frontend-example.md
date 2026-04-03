@@ -102,9 +102,10 @@ body { background: var(--bg-page); display: flex; justify-content: center; paddi
   z-index: 1;
 }
 .tag {
-  position: absolute; top: -10px; left: 14px;
+  position: absolute; top: -11px; left: 14px;
   font-size: 9.5px; font-weight: 700; padding: 2px 10px; border-radius: 10px;
   letter-spacing: 0.6px; text-transform: uppercase; color: #ffffff;
+  z-index: 10;
 }
 .tag.teal { background: #0d9488; }
 .tag.blue { background: #2563eb; }

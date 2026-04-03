@@ -95,7 +95,7 @@ body {
 
 .tag {
   position: absolute;
-  top: -10px;
+  top: -11px;
   left: 14px;
   font-size: 9.5px;
   font-weight: 700;
@@ -104,6 +104,7 @@ body {
   letter-spacing: 0.6px;
   text-transform: uppercase;
   color: #ffffff;
+  z-index: 10;
 }
 
 .tag.teal { background: #0d9488; }
@@ -169,6 +170,13 @@ body {
 .connection:hover {
   stroke-width: 3px;
   filter: drop-shadow(0 0 6px currentColor);
+}
+
+/* ========== 连线文字标签 ========== */
+.connection-label {
+  font-size: 9px;
+  fill: #64748b;
+  font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'PingFang SC', sans-serif;
 }
 </style>
 </head>

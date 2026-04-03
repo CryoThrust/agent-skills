@@ -186,6 +186,25 @@ A右中 → 向右水平延伸 → 拐点1 → 垂直向下/向上 → 拐点2 �
 - `flow`：2秒平滑流动动画
 - **关键**：垂直连线终点是 `B.top`（上边框），x坐标是 `B.left+B.width/2`（水平中点）
 
+#### 连线文字标签（可选）
+
+可在连线上添加简短文字描述：
+
+```html
+<!-- 水平连线 + 文字标签 -->
+<line x1="100" y1="50" x2="200" y2="50" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#ah)" class="connection flow" />
+<text x="150" y="45" text-anchor="middle" class="connection-label">HTTP</text>
+
+<!-- 垂直连线 + 文字标签 -->
+<line x1="100" y1="50" x2="100" y2="150" stroke="#059669" stroke-width="1.5" marker-end="url(#ah-green)" class="connection flow" />
+<text x="110" y="100" class="connection-label">data</text>
+```
+
+**文字位置规则**：
+- 水平连线：文字在连线上方 5px，x 取连线中点，使用 `text-anchor="middle"` 居中
+- 垂直连线：文字在连线右侧 10px，y 取连线中点
+- 文字内容简短（建议 2-8 个字符）
+
 #### 层级关系
 group(z-index:1) < svg(z-index:3) < box(z-index:5)
 
