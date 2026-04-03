@@ -193,17 +193,38 @@ A右中 → 向右水平延伸 → 拐点1 → 垂直向下/向上 → 拐点2 �
 ```html
 <!-- 水平连线 + 文字标签 -->
 <line x1="100" y1="50" x2="200" y2="50" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#ah)" class="connection flow" />
-<text x="150" y="45" text-anchor="middle" class="connection-label">HTTP</text>
+<text x="150" y="45" text-anchor="middle" dominant-baseline="auto" class="connection-label">HTTP</text>
 
 <!-- 垂直连线 + 文字标签 -->
 <line x1="100" y1="50" x2="100" y2="150" stroke="#059669" stroke-width="1.5" marker-end="url(#ah-green)" class="connection flow" />
-<text x="110" y="100" class="connection-label">data</text>
+<text x="108" y="100" text-anchor="start" dominant-baseline="middle" class="connection-label">data</text>
 ```
 
-**文字位置规则**：
-- 水平连线：文字在连线上方 5px，x 取连线中点，使用 `text-anchor="middle"` 居中
-- 垂直连线：文字在连线右侧 10px，y 取连线中点
+**文字位置计算规则**：
+
+| 连线类型 | x 坐标 | y 坐标 | 必要属性 |
+|---------|-------|-------|---------|
+| 水平连线 | (x1 + x2) / 2 | y1 - 5 | text-anchor="middle" |
+| 垂直连线 | x1 + 8 | (y1 + y2) / 2 | dominant-baseline="middle" |
+
+**示例计算**：
+```
+水平连线：x1=100, y1=50, x2=200, y2=50
+  → 文字 x = (100+200)/2 = 150
+  → 文字 y = 50 - 5 = 45
+  → <text x="150" y="45" text-anchor="middle">HTTP</text>
+
+垂直连线：x1=100, y1=50, x2=100, y2=150
+  → 文字 x = 100 + 8 = 108
+  → 文字 y = (50+150)/2 = 100
+  → <text x="108" y="100" dominant-baseline="middle">data</text>
+```
+
+**注意事项**：
 - 文字内容简短（建议 2-8 个字符）
+- 水平连线文字在连线上方
+- 垂直连线文字在连线右侧
+- 必须使用 `text-anchor` 或 `dominant-baseline` 确保对齐
 
 #### 层级关系
 group(z-index:1) < svg(z-index:3) < box(z-index:5)

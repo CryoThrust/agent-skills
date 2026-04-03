@@ -177,6 +177,7 @@ body {
   font-size: 9px;
   fill: #64748b;
   font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'PingFang SC', sans-serif;
+  pointer-events: none;
 }
 </style>
 </head>
