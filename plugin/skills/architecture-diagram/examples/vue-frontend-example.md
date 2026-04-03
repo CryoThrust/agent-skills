@@ -278,24 +278,24 @@ body { background: var(--bg-page); display: flex; justify-content: center; paddi
       </div>
     </div>
 
-    <!-- 图例（虚线 + 箭头） -->
+    <!-- 图例（虚线 + 箭头）- 独立 SVG，使用 legend- 前缀避免 ID 冲突 -->
     <svg class="legend" style="position:absolute; bottom:20px; right:40px; width:280px; height:20px" viewBox="0 0 280 20">
       <defs>
-        <marker id="leg-ah" markerWidth="5" markerHeight="4" refX="5" refY="2" orient="auto">
+        <marker id="legend-ah" markerWidth="5" markerHeight="4" refX="5" refY="2" orient="auto">
           <polygon points="0 0, 5 2, 0 4" fill="#94a3b8" />
         </marker>
-        <marker id="leg-ah-green" markerWidth="5" markerHeight="4" refX="5" refY="2" orient="auto">
+        <marker id="legend-ah-green" markerWidth="5" markerHeight="4" refX="5" refY="2" orient="auto">
           <polygon points="0 0, 5 2, 0 4" fill="#059669" />
         </marker>
-        <marker id="leg-ah-blue" markerWidth="5" markerHeight="4" refX="5" refY="2" orient="auto">
+        <marker id="legend-ah-blue" markerWidth="5" markerHeight="4" refX="5" refY="2" orient="auto">
           <polygon points="0 0, 5 2, 0 4" fill="#2563eb" />
         </marker>
       </defs>
-      <line x1="0" y1="10" x2="24" y2="10" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#leg-ah)" />
+      <line x1="0" y1="10" x2="24" y2="10" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#legend-ah)" />
       <text x="30" y="13" fill="#94a3b8" font-size="10">页面跳转</text>
-      <line x1="90" y1="10" x2="114" y2="10" stroke="#059669" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#leg-ah-green)" />
+      <line x1="90" y1="10" x2="114" y2="10" stroke="#059669" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#legend-ah-green)" />
       <text x="120" y="13" fill="#94a3b8" font-size="10">状态流</text>
-      <line x1="180" y1="10" x2="204" y2="10" stroke="#2563eb" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#leg-ah-blue)" />
+      <line x1="180" y1="10" x2="204" y2="10" stroke="#2563eb" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#legend-ah-blue)" />
       <text x="210" y="13" fill="#94a3b8" font-size="10">组件引用</text>
     </svg>
 
