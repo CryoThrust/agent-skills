@@ -59,3 +59,25 @@
 | 副标题 | 10px | 400 | `.sub` |
 | 技术说明 | 9.5px | 400 | `.tech` |
 | 分组标签 | 9.5px | 700 | `.tag` |
+| 连线文字 | 9px | 400 | `.connection-label` |
+
+## Connection Label Styles
+
+```css
+.connection-label {
+  font-size: 9px;
+  fill: #64748b;
+  font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'PingFang SC', sans-serif;
+  pointer-events: none;  /* 不阻挡鼠标事件 */
+}
+```
+
+**位置规则**：
+- 水平连线：上方 5px 或下方 12px（遮挡时）
+- 垂直连线：右侧 8px 或左侧 8px（遮挡时）
+- 最大偏移：15px（禁止漂移）
+
+**长度限制**：
+- 纯英文：最多 8 字符
+- 纯中文：最多 6 字符
+- 混合：总宽度 < 50px

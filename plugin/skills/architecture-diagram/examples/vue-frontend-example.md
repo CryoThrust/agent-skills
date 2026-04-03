@@ -283,8 +283,8 @@ body { background: var(--bg-page); display: flex; justify-content: center; paddi
       </div>
     </div>
 
-    <!-- 图例（虚线 + 箭头）- 放在标题右侧，使用 legend- 前缀避免 ID 冲突 -->
-    <svg class="legend" style="position:absolute; top:28px; right:40px; width:280px; height:20px; pointer-events:none" viewBox="0 0 280 20">
+    <!-- 图例（虚线 + 箭头）- 与标题同高（top:22px），横向单行排列 -->
+    <svg class="legend" style="position:absolute; top:22px; right:40px; width:620px; height:20px; pointer-events:none" viewBox="0 0 620 20">
       <defs>
         <marker id="legend-ah" markerWidth="5" markerHeight="4" refX="5" refY="2" orient="auto">
           <polygon points="0 0, 5 2, 0 4" fill="#94a3b8" />
@@ -295,13 +295,28 @@ body { background: var(--bg-page); display: flex; justify-content: center; paddi
         <marker id="legend-ah-blue" markerWidth="5" markerHeight="4" refX="5" refY="2" orient="auto">
           <polygon points="0 0, 5 2, 0 4" fill="#2563eb" />
         </marker>
+        <marker id="legend-ah-red" markerWidth="5" markerHeight="4" refX="5" refY="2" orient="auto">
+          <polygon points="0 0, 5 2, 0 4" fill="#e11d48" />
+        </marker>
+        <marker id="legend-ah-violet" markerWidth="5" markerHeight="4" refX="5" refY="2" orient="auto">
+          <polygon points="0 0, 5 2, 0 4" fill="#7c3aed" />
+        </marker>
       </defs>
+      <!-- 主流程 -->
       <line x1="0" y1="10" x2="24" y2="10" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#legend-ah)" />
-      <text x="30" y="13" fill="#94a3b8" font-size="10">页面跳转</text>
-      <line x1="90" y1="10" x2="114" y2="10" stroke="#059669" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#legend-ah-green)" />
-      <text x="120" y="13" fill="#94a3b8" font-size="10">状态流</text>
-      <line x1="180" y1="10" x2="204" y2="10" stroke="#2563eb" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#legend-ah-blue)" />
-      <text x="210" y="13" fill="#94a3b8" font-size="10">组件引用</text>
+      <text x="30" y="13" fill="#94a3b8" font-size="10">主流程</text>
+      <!-- 数据流 -->
+      <line x1="100" y1="10" x2="124" y2="10" stroke="#059669" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#legend-ah-green)" />
+      <text x="130" y="13" fill="#94a3b8" font-size="10">数据流</text>
+      <!-- 依赖 -->
+      <line x1="200" y1="10" x2="224" y2="10" stroke="#2563eb" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#legend-ah-blue)" />
+      <text x="230" y="13" fill="#94a3b8" font-size="10">依赖</text>
+      <!-- 控制 -->
+      <line x1="300" y1="10" x2="324" y2="10" stroke="#e11d48" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#legend-ah-red)" />
+      <text x="330" y="13" fill="#94a3b8" font-size="10">控制</text>
+      <!-- 事件 -->
+      <line x1="400" y1="10" x2="424" y2="10" stroke="#7c3aed" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#legend-ah-violet)" />
+      <text x="430" y="13" fill="#94a3b8" font-size="10">事件</text>
     </svg>
 
   </div>
@@ -325,8 +340,8 @@ resize();
 [x] 标题下方有灰色分隔线
 [x] 连线使用 class="connection flow"
 [x] SVG 连线层没有 pointer-events:none
-[x] 图例使用虚线样式 + 箭头
-[x] 图例放在标题右侧，有 pointer-events:none
+[x] 图例使用虚线样式 + 箭头，至少 5 类
+[x] 图例与标题同高（top:22px），横向单行排列
 [x] 连线锚点在组件边缘（右中、左中、下中、上中）
 [x] 连线不穿过任何组件
 [x] 分组底部内边距 >= 16px

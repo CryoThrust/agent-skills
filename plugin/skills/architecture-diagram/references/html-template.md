@@ -45,7 +45,7 @@ body {
 
 .canvas {
   width: 1440px;
-  height: 900px;
+  height: 900px;  /* 根据实际内容调整：700/800/900/1000/1100/1200 */
   position: relative;
   overflow: hidden;
   background: var(--bg-canvas);
@@ -197,6 +197,7 @@ body {
 
     <!-- SVG 连线层（层级：group < svg < box） -->
     <!-- 注意：不要设置 pointer-events:none，否则悬停高亮无法生效 -->
+    <!-- viewBox 高度必须与 canvas 高度一致 -->
     <svg class="connections" style="position:absolute; top:0; left:0; width:100%; height:100%; z-index:3" viewBox="0 0 1440 900">
       <defs>
         <marker id="ah" markerWidth="5" markerHeight="4" refX="5" refY="2" orient="auto">
@@ -223,10 +224,13 @@ body {
       </defs>
       <!-- 连线示例：class="connection flow" -->
       <!-- <line x1="起点X" y1="起点Y" x2="终点X" y2="终点Y" stroke="#颜色" stroke-width="1.5" marker-end="url(#ah)" class="connection flow" /> -->
+      <!-- 连线文字示例：紧贴连线，最大偏移 15px -->
+      <!-- <text x="(x1+x2)/2" y="y1-5" text-anchor="middle" class="connection-label">HTTP</text> -->
     </svg>
 
-    <!-- 图例（虚线 + 箭头）- 放在标题右侧，使用 leg- 前缀避免 ID 冲突 -->
-    <svg class="legend" style="position:absolute; top:28px; right:40px; width:280px; height:20px; pointer-events:none" viewBox="0 0 280 20">
+    <!-- 图例（虚线 + 箭头）- 与标题同高（top:22px），横向单行排列 -->
+    <!-- 必须添加 pointer-events:none 避免阻挡连线悬停 -->
+    <svg class="legend" style="position:absolute; top:22px; right:40px; width:620px; height:20px; pointer-events:none" viewBox="0 0 620 20">
       <defs>
         <marker id="legend-ah" markerWidth="5" markerHeight="4" refX="5" refY="2" orient="auto">
           <polygon points="0 0, 5 2, 0 4" fill="#94a3b8" />
@@ -237,16 +241,28 @@ body {
         <marker id="legend-ah-blue" markerWidth="5" markerHeight="4" refX="5" refY="2" orient="auto">
           <polygon points="0 0, 5 2, 0 4" fill="#2563eb" />
         </marker>
+        <marker id="legend-ah-red" markerWidth="5" markerHeight="4" refX="5" refY="2" orient="auto">
+          <polygon points="0 0, 5 2, 0 4" fill="#e11d48" />
+        </marker>
+        <marker id="legend-ah-violet" markerWidth="5" markerHeight="4" refX="5" refY="2" orient="auto">
+          <polygon points="0 0, 5 2, 0 4" fill="#7c3aed" />
+        </marker>
       </defs>
       <!-- 主流程 -->
       <line x1="0" y1="10" x2="24" y2="10" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#legend-ah)" />
       <text x="30" y="13" fill="#94a3b8" font-size="10">主流程</text>
       <!-- 数据流 -->
-      <line x1="90" y1="10" x2="114" y2="10" stroke="#059669" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#legend-ah-green)" />
-      <text x="120" y="13" fill="#94a3b8" font-size="10">数据流</text>
+      <line x1="100" y1="10" x2="124" y2="10" stroke="#059669" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#legend-ah-green)" />
+      <text x="130" y="13" fill="#94a3b8" font-size="10">数据流</text>
       <!-- 依赖 -->
-      <line x1="180" y1="10" x2="204" y2="10" stroke="#2563eb" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#legend-ah-blue)" />
-      <text x="210" y="13" fill="#94a3b8" font-size="10">依赖</text>
+      <line x1="200" y1="10" x2="224" y2="10" stroke="#2563eb" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#legend-ah-blue)" />
+      <text x="230" y="13" fill="#94a3b8" font-size="10">依赖</text>
+      <!-- 控制 -->
+      <line x1="300" y1="10" x2="324" y2="10" stroke="#e11d48" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#legend-ah-red)" />
+      <text x="330" y="13" fill="#94a3b8" font-size="10">控制</text>
+      <!-- 事件 -->
+      <line x1="400" y1="10" x2="424" y2="10" stroke="#7c3aed" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#legend-ah-violet)" />
+      <text x="430" y="13" fill="#94a3b8" font-size="10">事件</text>
     </svg>
 
   </div>
@@ -256,9 +272,10 @@ body {
 function resize() {
   const wrapper = document.querySelector('.wrapper');
   const canvas = document.querySelector('.canvas');
+  const canvasHeight = canvas.offsetHeight;  // 获取实际高度
   const scale = Math.min(wrapper.clientWidth / 1440, 1);
   canvas.style.transform = `scale(${scale})`;
-  wrapper.style.height = (900 * scale) + 'px';
+  wrapper.style.height = (canvasHeight * scale) + 'px';
 }
 window.addEventListener('resize', resize);
 resize();
@@ -274,6 +291,10 @@ resize();
 1. **必须复制完整 style 部分**
 2. **连线类**：`class="connection flow"`
 3. **层级**：group(z-index:1) < svg(z-index:3) < box(z-index:5)
-4. **图例**：使用 SVG 绘制虚线 + 箭头，参考模板中的 legend 部分
+4. **图例**：与标题同高（top:22px），横向单行排列，至少 5 类连线，使用虚线 + 箭头
 5. **分隔线**：标题下方添加灰色分隔线
 6. **禁止斜线**：只能用水平线+垂直线，详见 SKILL.md 和 layout-rules.md
+7. **画布高度**：根据内容调整（700/800/900/1000/1100/1200），公式：max(分组.bottom) + 80px
+8. **viewBox 同步**：SVG viewBox 高度必须与 canvas 高度一致
+9. **连线文字**：紧贴连线，最大偏移 15px，多条连线错位处理
+10. **边界检查**：无信息卡片时 max group.right < 1360px，有信息卡片时 < 1140px
