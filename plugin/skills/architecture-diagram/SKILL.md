@@ -82,9 +82,9 @@ Max group right must < 1140px (for right info area)
 
 ```
 [ ] 坐标是 10 的倍数
-[ ] 同行组件间距 >= 30px
-[ ] 组件不超出分组边界
+[ ] 同行分组间距 >= 30px
 [ ] 分组底部内边距 >= 16px
+[ ] 分组垂直间距 >= 30px（避免卡片挨在一起）
 [ ] 最大 right < 1140px
 [ ] 连线最小长度 >= 40px
 [ ] 无斜线（x1=x2 或 y1=y2）
@@ -155,6 +155,7 @@ group(z-index:1) < svg(z-index:3) < box(z-index:5)
 [ ] 图例与连线颜色一致
 [ ] 标题下方有灰色分隔线
 [ ] 所有 box 有 position:absolute, z-index:5
+[ ] 分组间距 >= 30px（水平和垂直）
 [ ] 连线 box 间距 >= 40px
 [ ] 文字不换行（英文:字符数×6+24px，中文:字符数×8+24px）
 [ ] 水平连线 y1=y2，垂直连线 x1=x2
