@@ -1,6 +1,6 @@
 ---
 name: architecture-diagram
-description: This skill should be used when the user asks to "draw an architecture diagram", "create architecture diagram", "generate architecture", "画架构图", "生成架构图", "绘制架构图", or mentions architecture, microservice architecture, system architecture, deployment architecture, technology architecture, or needs to visualize system structure with components and connections.
+description: This skill should be used when the user asks to "draw an architecture diagram", "create architecture diagram", "generate architecture", "画架构图", "生成架构图", "绘制架构图", or mentions architecture, microservice architecture, frontend architecture (Vue/React), system architecture, deployment architecture, technology architecture, or needs to visualize system structure with components and connections.
 version: 1.0.0
 author: lihongyan
 email: Y0hanes@Outlook.com
@@ -336,11 +336,12 @@ Open HTML in browser and check:
 
 | Architecture Type | Layer Suggestion | Core Components |
 |-------------------|------------------|-----------------|
+| Frontend (Vue/React) | Entry, Router, Pages, Components, State, Utils | Router, Views, Components, Store(Pinia/Redux), API |
 | Microservice | Gateway, Service, Governance, Infrastructure | Gateway, Service Cluster, Registry, Config |
 | Business System | Access, Application, Domain, Data | API, App Service, Domain Service, Database |
-| Technology | Presentation, Control, Service, Persistence | Frontend, Controller, Service, DAO |
+| Backend Layered | Presentation, Control, Service, Persistence | Controller, Service, DAO, Database |
 | Deployment | Access, Compute, Storage | LB, Server Cluster, DB Cluster |
-| Data | Collection, Processing, Storage, Application | Data Source, Compute Engine, Storage, BI |
+| Data Pipeline | Collection, Processing, Storage, Application | Data Source, Compute Engine, Storage, BI |
 
 ## Quick Reference
 
@@ -349,7 +350,8 @@ Open HTML in browser and check:
 | `references/html-template.md` | **完整 HTML 模板（必须使用）** |
 | `references/style-guide.md` | Color system, component sizes, style rules |
 | `references/layout-rules.md` | Coordinate constraints, spacing, collision rules |
-| `examples/microservice-example.md` | Complete microservice architecture example |
+| `examples/vue-frontend-example.md` | Vue 3 frontend architecture example |
+| `examples/microservice-example.md` | Spring Cloud microservice architecture example |
 
 ## Key Principles
 

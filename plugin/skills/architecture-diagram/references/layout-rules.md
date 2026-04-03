@@ -247,14 +247,23 @@ Right: 40px
 
 ### Content
 
-Include legend items for all connection types used:
-- Request flow (solid gray)
-- Service discovery (dashed teal)
-- Config sync (dashed green)
-- Service call (dashed blue)
-- Traffic control (dashed red)
-- Transaction (dashed orange)
-- Message (dashed violet)
+Include legend items for all connection types used. Use universal semantic names:
+
+| Semantic Type | Style | Example Use Cases |
+|---------------|-------|-------------------|
+| Main Flow / Request | Solid gray | User request, Page navigation, Component call |
+| Config / Metadata | Dashed teal | Config, Service discovery, Store, Environment |
+| Data / State | Dashed green | Database, Cache, State management, Props |
+| Dependency / Reference | Dashed blue | Module import, Service call, Component ref |
+| Control / Guard | Dashed red | Auth, Permission, Route guard, Validation |
+| Coordination | Dashed orange | Transaction, State sync, Lifecycle |
+| Event / Message | Dashed violet | Event bus, Message queue, Pub/Sub |
+
+**Adapt legend labels to architecture context:**
+- Vue/React: "Component call", "State flow", "Event"
+- Microservice: "Request flow", "Service call", "Message"
+- Backend: "API call", "Data flow", "Async event"
+- Deployment: "Traffic", "Data sync", "Alert"
 
 ---
 

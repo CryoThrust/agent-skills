@@ -40,26 +40,35 @@
 
 | Color | Hex | Usage Scenarios |
 |-------|-----|-----------------|
-| teal | #0d9488 | Registry, Config, Core infrastructure |
-| blue | #2563eb | Gateway, Network, Routing |
-| green | #059669 | Service cluster, Business modules |
-| red | #e11d48 | Traffic control, Circuit breaker, Security |
-| orange | #d97706 | Transaction, Scheduling |
-| violet | #7c3aed | Message queue, Event |
-| cyan | #0891b2 | Monitoring, Logging |
-| slate | #64748b | Tools, Utilities |
+| teal | #0d9488 | Core infrastructure, Config, Registry, Store |
+| blue | #2563eb | Network, Routing, Gateway, API layer |
+| green | #059669 | Business modules, Service cluster, Data layer |
+| red | #e11d48 | Control, Security, Guard, Protection |
+| orange | #d97706 | Coordination, Scheduling, Consistency |
+| violet | #7c3aed | Event, Message, Async communication |
+| cyan | #0891b2 | Monitoring, Logging, DevTools |
+| slate | #64748b | Tools, Utilities, Helpers |
 
-### Connection Line Colors
+### Connection Line Colors (Universal Semantics)
 
-| Color | Hex | Usage Scenarios |
-|-------|-----|-----------------|
-| Gray | #94a3b8 | Main request flow, Default calls |
-| Teal | #0d9488 | Service discovery, Registration |
-| Green | #059669 | Config sync, State |
-| Blue | #2563eb | Service-to-service calls |
-| Red | #e11d48 | Governance, Rate limiting, Circuit breaker |
-| Orange | #d97706 | Transaction |
-| Violet | #7c3aed | Message, Event |
+| Semantic Type | Color | Hex | Example Scenarios |
+|---------------|-------|-----|-------------------|
+| Main Flow / Request | Gray | #94a3b8 | User request, Page navigation, Component call, API request |
+| Config / Metadata | Teal | #0d9488 | Config center, Service discovery, Environment, Store (Redux/Vuex) |
+| Data / State | Green | #059669 | Database, Cache, State management, Data sync |
+| Dependency / Reference | Blue | #2563eb | Module import, Service call, Component reference, API call |
+| Control / Guard | Red | #e11d48 | Auth, Permission, Rate limit, Route guard, Validation |
+| Coordination / Consistency | Orange | #d97706 | Transaction, State sync, Scheduling, Lifecycle |
+| Event / Message | Violet | #7c3aed | Event bus, Message queue, Pub/Sub, EventEmitter |
+
+**Architecture-specific mapping examples:**
+
+| Architecture | Main Flow (Gray) | Data (Green) | Event (Violet) | Dependency (Blue) |
+|--------------|------------------|--------------|----------------|-------------------|
+| Vue/React | Page → Component | Props/State/Store | EventBus/Emitter | Import reference |
+| Microservice | Request → Gateway | Database | MQ Message | Service call |
+| Backend Layered | Controller → Service | DAO/Repository | Async event | Module dependency |
+| Deployment | LB → Server | Data sync | Alert notification | Service dependency |
 
 ---
 
