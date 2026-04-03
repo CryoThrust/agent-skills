@@ -2,281 +2,81 @@
 
 ## Coordinate System
 
-### Canvas Specification
-
-| Property | Value | Description |
-|----------|-------|-------------|
-| Width | 1440px | Fixed canvas width |
-| Height | 900-1200px | Adjustable based on content |
-| Origin | (0, 0) | Top-left corner |
-| Safe margin | 40px | All sides |
-
-### Grid System
-
-- Base unit: **10px**
-- All coordinates must be multiples of 10
-- Recommended values: 40, 50, 60, 80, 100, 120, 140, 160, 180, 200...
-
----
+| 属性 | 值 | 说明 |
+|------|-----|------|
+| 画布宽度 | 1440px | 固定宽度 |
+| 画布高度 | 900-1200px | 根据内容调整 |
+| 基准单位 | 10px | 所有坐标必须是 10 的倍数 |
+| 安全边距 | 40px | 四边 |
 
 ## Area Division
 
-### Horizontal Division (Columns)
+### 水平分区
+| 列 | 范围 | 用途 |
+|----|------|------|
+| Col 1 | 50-200px | 入口 |
+| Col 2 | 220-400px | 网关 |
+| Col 3 | 420-620px | 核心服务 |
+| Col 4 | 640-800px | 存储/外部 |
+| Col 5 | 820-1000px | 配置/治理 |
+| 右侧 | right:40px, 260px | 信息卡片 |
 
-| Column | Left Range | Purpose |
-|--------|------------|---------|
-| Col 1 | 50-200px | Entry point (Client, User) |
-| Col 2 | 220-400px | Gateway, Front-door |
-| Col 3 | 420-620px | Core services |
-| Col 4 | 640-800px | Storage, External |
-| Col 5 | 820-1000px | Config, Governance |
-| Right | right:40px, width:260px | Info cards |
+### 垂直分区
+| 行 | 范围 | 用途 |
+|----|------|------|
+| Row 0 | 20-80px | 标题区 |
+| Row 1 | 90-200px | 第一层组件 |
+| Row 2 | 200-280px | 连接通道 |
+| Row 3 | 280-500px | 第二层组件 |
+| Row 4 | 510-620px | 基础设施层 |
 
-### Vertical Division (Rows)
+## Spacing
 
-| Row | Top Range | Purpose |
-|-----|-----------|---------|
-| Row 0 | 20-80px | Title area |
-| Row 1 | 90-200px | Layer 1 components |
-| Row 2 | 200-280px | Spacing / Connection channel |
-| Row 3 | 280-500px | Layer 2 components |
-| Row 4 | 510-620px | Infrastructure layer |
-| Row 5 | bottom 20-50px | Legend area |
-
----
-
-## Spacing Constraints
-
-### Minimum Spacing
-
-| Relationship | Minimum Gap |
-|--------------|-------------|
-| Same-row adjacent groups | 30px |
-| Same-row adjacent components | 20px |
-| Component to group border | 16px |
-| Group to group (different rows) | 20px |
-| Component to canvas edge | 40px |
-| Info cards vertical gap | 20px |
-
-### Group Internal Padding
-
-| Side | Padding |
+| 关系 | 最小间距 |
 |------|---------|
-| Top (with tag) | 26px |
-| Top (no tag) | 16px |
-| Bottom | 16px |
-| Left | 16px |
-| Right | 16px |
-
----
-
-## Group Size Constraints
-
-### Minimum Dimensions
-
-- Minimum width: 150px
-- Minimum height: 100px
-
-### Size Calculation
-
-```
-Group width >= max(component widths) + 32px (left/right padding)
-Group height = sum(component heights) + (component_count - 1) × 8px + 42px (top/bottom padding + tag)
-```
-
-### Capacity Constraint
-
-```
-Total width of same-row groups = Σ(group widths) + (group_count - 1) × 30px
-Constraint: Total width <= Canvas width - 80px - Right info area width
-Constraint: Total width <= 1100px
-```
-
----
+| 同行相邻分组 | 30px |
+| 同行相邻组件 | 20px |
+| 组件到分组边框 | 16px |
+| 信息卡片垂直间距 | 20px |
 
 ## Collision Detection
 
-### Absolute Prohibition
-
-For any two elements A and B:
-
 ```
-Prohibited: A.left < B.right AND A.right > B.left
-            AND A.top < B.bottom AND A.bottom > B.top
-```
+right = left + width
+bottom = top + height
 
-### Detection Formula
-
-Calculate for each element:
-- `right = left + width`
-- `bottom = top + height`
-
-Check pairs:
-- Horizontal: `A.right < B.left` OR `A.left > B.right`
-- Vertical: `A.bottom < B.top` OR `A.top > B.bottom`
-
-At least one must be true to avoid collision.
-
----
-
-## Component Placement Rules
-
-### Within Group
-
-```
-Component.left = Group.left + 16
-Component.top = Group.top + 26 (space for tag)
-
-For vertical stacking:
-  Component[0].top = Group.top + 26
-  Component[1].top = Component[0].bottom + 8
-  Component[2].top = Component[1].bottom + 8
-  ...
+避免碰撞：A.right < B.left OR A.left > B.right
+         A.bottom < B.top OR A.top > B.bottom
 ```
 
-### Boundary Check
-
-```
-Component.left >= Group.left + 16
-Component.right <= Group.right - 16
-Component.top >= Group.top + 26
-Component.bottom <= Group.bottom - 16
-```
-
----
+**边界检查：** 最大 group.right < 1140px（预留右侧信息区）
 
 ## Connection Rules
 
-### Anchor Points
-
-Each component has 4 anchor points:
-
+### 锚点
 ```
-Left-center:   (left, top + height/2)
-Right-center:  (right, top + height/2)
-Top-center:    (left + width/2, top)
-Bottom-center: (left + width/2, bottom)
+左中: (left, top + height/2)
+右中: (right, top + height/2)
+上中: (left + width/2, top)
+下中: (left + width/2, bottom)
 ```
 
-### Path Types
+### 路径类型
 
-#### Type A: Horizontal Direct
+| 类型 | 用法 | 代码 |
+|------|------|------|
+| 水平直达 | 同行相邻 | `<line x1="起点右中" y1="Y" x2="终点左中" y2="Y" />` |
+| 垂直直达 | 同列不同行 | `<line x1="X" y1="起点下中" x2="X" y2="终点上中" />` |
+| L型路径 | 跨行跨列 | `<path d="M 起点 L 拐点 L 终点" />` |
 
-```
-Start.right-center → End.left-center
-
-Usage: Same-row adjacent components
-
-<line x1="start_right" y1="start_y" x2="end_left" y2="end_y" />
-```
-
-#### Type B: Vertical Direct
-
-```
-Start.bottom-center → End.top-center
-
-Usage: Same-column components in different rows
-
-<line x1="start_x" y1="start_bottom" x2="end_x" y2="end_top" />
-```
-
-#### Type C: L-Shape Path
-
-```
-Start.right-center → (拐点X, Start.Y) → (拐点X, End.Y) → End.left-center
-
-Usage: Cross-row, cross-column connections
-
-拐点X should be in blank area (usually between columns)
-```
-
-#### Type D: Middle Layer Path
-
-```
-Start.bottom-center → (Start.X, MiddleY) → (End.X, MiddleY) → End.top-center
-
-Usage: Multi-layer component connections
-MiddleY = 200-280px (spacing channel)
-```
-
-### Connection Constraints
-
-- 拐点 coordinates must be multiples of 10
-- Connections must not pass through any component interior
-- Parallel connections must have gap >= 10px
-- Use dashed lines for secondary connections (discovery, config, etc.)
-
----
-
-## Right Info Area Rules
-
-### Positioning
-
-```
-Position: absolute
-Right: 40px
-Width: 260px
-Top range: 90px to (canvas height - 100px)
-```
-
-### Content Layout
-
-- Each info card: width 260px
-- Vertical gap between cards: 20px
-- Cards don't overlap with main area groups
-
-### Boundary Check
-
-```
-Main area max right = max(all groups.right)
-Info area left = Canvas width - 40 - 260 = 1140px
-Constraint: Main area max right < 1140px
-```
-
----
+### 连线约束
+- 拐点坐标必须是 10 的倍数
+- 连线不能穿过组件内部
+- 平行连线间距 >= 10px
+- 拐点必须放在空白区域
 
 ## Legend Rules
 
-### Positioning
-
-```
-Position: absolute
-Bottom: 20px
-Right: 40px
-```
-
-### Content
-
-Include legend items for all connection types used. Use universal semantic names:
-
-| Semantic Type | Style | Example Use Cases |
-|---------------|-------|-------------------|
-| Main Flow / Request | Solid gray | User request, Page navigation, Component call |
-| Config / Metadata | Dashed teal | Config, Service discovery, Store, Environment |
-| Data / State | Dashed green | Database, Cache, State management, Props |
-| Dependency / Reference | Dashed blue | Module import, Service call, Component ref |
-| Control / Guard | Dashed red | Auth, Permission, Route guard, Validation |
-| Coordination | Dashed orange | Transaction, State sync, Lifecycle |
-| Event / Message | Dashed violet | Event bus, Message queue, Pub/Sub |
-
-**Adapt legend labels to architecture context:**
-- Vue/React: "Component call", "State flow", "Event"
-- Microservice: "Request flow", "Service call", "Message"
-- Backend: "API call", "Data flow", "Async event"
-- Deployment: "Traffic", "Data sync", "Alert"
-
----
-
-## Responsive Scaling
-
-```javascript
-function resize() {
-  const wrapper = document.querySelector('.wrapper');
-  const canvas = document.querySelector('.canvas');
-  const scale = Math.min(wrapper.clientWidth / 1440, 1);
-  canvas.style.transform = `scale(${scale})`;
-  wrapper.style.height = (canvasHeight * scale) + 'px';
-}
-window.addEventListener('resize', resize);
-resize();
-```
+- 只显示实际使用的连线类型
+- 颜色必须与连线 stroke 一致
+- 标签根据架构类型适配（见 style-guide.md）

@@ -2,269 +2,60 @@
 
 ## Color System
 
-### Background Colors
+### Component Colors
 
-```css
-:root {
-  /* Page & Canvas */
-  --bg-page: #f3f4f6;        /* Page background */
-  --bg-canvas: #ffffff;       /* Canvas background */
+| 用途 | 背景色 | 边框色 |
+|------|--------|--------|
+| 普通组件 | #ffffff | #d1d5db |
+| 数据源/外部系统 | #f0fdfa | #5eead4 |
+| 虚线子组件 | #f8fafb | #cbd5e1 |
+| 高亮/实验特性 | #fffbeb | #f59e0b |
+| 基础设施层 | #f0fdf4 | #a7f3d0 |
 
-  /* Component Backgrounds */
-  --bg-box: #ffffff;          /* Normal component */
-  --bg-source: #f0fdfa;       /* Data source / External system */
-  --bg-dashed: #f8fafb;       /* Dashed/sub component */
-  --bg-highlight: #fffbeb;    /* Highlighted / Experimental */
-  --bg-infra: #f0fdf4;        /* Infrastructure layer */
-}
-```
+### Tag Colors (分组标题)
 
-### Border Colors
+| 颜色 | 色值 | 适用场景 |
+|------|------|---------|
+| teal | #0d9488 | 核心基础设施、配置中心、Store |
+| blue | #2563eb | 网关、路由、API层 |
+| green | #059669 | 业务模块、服务集群、数据层 |
+| red | #e11d48 | 控制、安全、守卫 |
+| orange | #d97706 | 协调、调度、一致性 |
+| violet | #7c3aed | 事件、消息、异步通信 |
 
-| Type | Color | Hex | Usage |
-|------|-------|-----|-------|
-| Normal | Gray | #d1d5db | Default component border |
-| Source | Teal | #5eead4 | Data source, external system |
-| Highlight | Orange | #f59e0b | Important, experimental |
-| Infrastructure | Green | #a7f3d0 | Infrastructure components |
+### Connection Line Colors
 
-### Text Colors
+| 语义 | 颜色 | 色值 | 适用场景 |
+|------|------|------|---------|
+| 主流程 | 灰色 | #94a3b8 | 请求流、页面跳转、组件调用 |
+| 数据流 | 绿色 | #059669 | 数据库、缓存、状态管理 |
+| 依赖 | 蓝色 | #2563eb | 模块引用、服务调用 |
+| 配置 | 青色 | #0d9488 | 配置中心、服务发现、Store |
+| 控制 | 红色 | #e11d48 | 权限、熔断、路由守卫 |
+| 事件 | 紫色 | #7c3aed | 消息队列、事件总线 |
 
-| Type | Color | Hex | Usage |
-|------|-------|-----|-------|
-| Primary | Slate 800 | #1e293b | Main text, titles |
-| Secondary | Slate 500 | #64748b | Subtitles, descriptions |
-| Muted | Slate 400 | #94a3b8 | Tech notes, hints |
+**架构适配：**
 
-### Tag Colors (Group Labels)
-
-| Color | Hex | Usage Scenarios |
-|-------|-----|-----------------|
-| teal | #0d9488 | Core infrastructure, Config, Registry, Store |
-| blue | #2563eb | Network, Routing, Gateway, API layer |
-| green | #059669 | Business modules, Service cluster, Data layer |
-| red | #e11d48 | Control, Security, Guard, Protection |
-| orange | #d97706 | Coordination, Scheduling, Consistency |
-| violet | #7c3aed | Event, Message, Async communication |
-| cyan | #0891b2 | Monitoring, Logging, DevTools |
-| slate | #64748b | Tools, Utilities, Helpers |
-
-### Connection Line Colors (Universal Semantics)
-
-| Semantic Type | Color | Hex | Example Scenarios |
-|---------------|-------|-----|-------------------|
-| Main Flow / Request | Gray | #94a3b8 | User request, Page navigation, Component call, API request |
-| Config / Metadata | Teal | #0d9488 | Config center, Service discovery, Environment, Store (Redux/Vuex) |
-| Data / State | Green | #059669 | Database, Cache, State management, Data sync |
-| Dependency / Reference | Blue | #2563eb | Module import, Service call, Component reference, API call |
-| Control / Guard | Red | #e11d48 | Auth, Permission, Rate limit, Route guard, Validation |
-| Coordination / Consistency | Orange | #d97706 | Transaction, State sync, Scheduling, Lifecycle |
-| Event / Message | Violet | #7c3aed | Event bus, Message queue, Pub/Sub, EventEmitter |
-
-**Architecture-specific mapping examples:**
-
-| Architecture | Main Flow (Gray) | Data (Green) | Event (Violet) | Dependency (Blue) |
-|--------------|------------------|--------------|----------------|-------------------|
-| Vue/React | Page → Component | Props/State/Store | EventBus/Emitter | Import reference |
-| Microservice | Request → Gateway | Database | MQ Message | Service call |
-| Backend Layered | Controller → Service | DAO/Repository | Async event | Module dependency |
-| Deployment | LB → Server | Data sync | Alert notification | Service dependency |
-
----
-
-## Component Types
-
-### Type 1: Normal Component
-
-**Visual:** Solid border, white background
-
-**Usage:** Core functional modules
-
-```html
-<div class="box" style="left:246px; top:116px; width:128px; height:40px; border-color:#3b82f6">
-  Component Name<span class="sub">Description</span>
-</div>
-```
-
-### Type 2: Source Component
-
-**Visual:** Teal tinted background, teal border
-
-**Usage:** External systems, databases, APIs
-
-```html
-<div class="box source" style="left:50px; top:116px; width:145px; height:48px">
-  MySQL<span class="tech">Database</span>
-</div>
-```
-
-### Type 3: Dashed Component
-
-**Visual:** Dashed border, light gray background
-
-**Usage:** Sub-functions, internal components
-
-```html
-<div class="box dashed" style="left:246px; top:160px; width:128px; height:32px">
-  SubComponent
-</div>
-```
-
-### Type 4: Highlighted Component
-
-**Visual:** Orange tinted background, orange border
-
-**Usage:** Important, experimental, or flagged features
-
-```html
-<div class="box" style="border-color:#f59e0b; background:#fffbeb">
-  Feature<span class="sub">Experimental</span>
-</div>
-```
-
-### Type 5: Infrastructure Component
-
-**Visual:** Green tinted background, green border
-
-**Usage:** Infrastructure layer components
-
-```html
-<div class="box" style="border-color:#a7f3d0; background:#f0fdf4">
-  Kubernetes<span class="sub">Container Orchestration</span>
-</div>
-```
-
----
+| 架构 | 主流程(灰) | 数据流(绿) | 依赖(蓝) | 事件(紫) |
+|------|-----------|-----------|---------|---------|
+| Vue/React | 页面→组件 | Props/State | Import引用 | EventEmitter |
+| 微服务 | 请求→网关 | 数据库 | 服务调用 | MQ消息 |
+| 后端分层 | Controller→Service | DAO | 模块依赖 | 异步事件 |
 
 ## Component Sizes
 
-### Size Templates
+| 类型 | 宽度 | 高度 | 用途 |
+|------|------|------|------|
+| 小型 | 100-120px | 32-36px | 子功能、标签 |
+| 标准 | 130-160px | 40-48px | 核心模块 |
+| 大型 | 170-220px | 50-60px | 主服务 |
 
-| Type | Width | Height | Usage |
-|------|-------|--------|-------|
-| Small | 100-120px | 32-36px | Sub-functions, labels |
-| Standard | 130-160px | 40-48px | Core modules |
-| Large | 170-220px | 50-60px | Main services |
-| Info Card | 260px | Auto | Right side info cards |
+## Text Sizes
 
-### Text Sizes
-
-| Element | Size | Weight | Class |
-|---------|------|--------|-------|
-| Main title | 17px | 700 | - |
-| Component name | 13px | 600 | - |
-| Subtitle | 10px | 400 | `.sub` |
-| Tech note | 9.5px | 400 | `.tech` |
-| Tag label | 9.5px | 700 | `.tag` |
-
----
-
-## Group (Container) Styles
-
-### Basic Group
-
-```css
-.group {
-  border: 1.5px dashed #cbd5e1;
-  border-radius: 14px;
-  background: rgba(248, 250, 252, 0.6);
-}
-```
-
-### Tag Positioning
-
-```css
-.tag {
-  position: absolute;
-  top: -10px;
-  left: 14px;
-  font-size: 9.5px;
-  font-weight: 700;
-  padding: 2px 10px;
-  border-radius: 10px;
-  letter-spacing: 0.6px;
-  text-transform: uppercase;
-  color: #ffffff;
-}
-```
-
----
-
-## Enclosure Styles
-
-### Infrastructure Enclosure
-
-```css
-.enclosure {
-  border: 1px solid #e2e8f0;
-  border-radius: 18px;
-  background: rgba(236, 253, 245, 0.3);
-}
-```
-
-### Label Positioning
-
-```css
-.enclosure-label {
-  position: absolute;
-  color: #059669;
-  font-size: 9px;
-  font-weight: 500;
-  letter-spacing: 0.4px;
-  font-family: 'SF Mono', 'Menlo', monospace;
-}
-```
-
----
-
-## Info Card Styles
-
-```html
-<div style="position:absolute; right:40px; top:90px; width:260px">
-  <div style="border:1px solid #e2e8f0; border-radius:10px; padding:12px 14px; background:rgba(248,250,252,0.8)">
-    <div style="font-size:10px; font-weight:700; color:#1e293b; margin-bottom:6px">Card Title</div>
-    <div style="font-size:9.5px; color:#64748b; line-height:1.6">
-      Content here...
-    </div>
-  </div>
-</div>
-```
-
----
-
-## Legend Styles
-
-```css
-.legend {
-  position: absolute;
-  display: flex;
-  gap: 16px;
-}
-
-.legend-item {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  color: #94a3b8;
-  font-size: 10px;
-}
-
-.legend-line {
-  width: 24px;
-  height: 0;
-}
-```
-
----
-
-## Font Stack
-
-```css
-font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
-```
-
-For code/monospace:
-
-```css
-font-family: 'SF Mono', 'Menlo', monospace;
-```
+| 元素 | 字号 | 字重 | Class |
+|------|------|------|-------|
+| 主标题 | 17px | 700 | - |
+| 组件名 | 13px | 600 | - |
+| 副标题 | 10px | 400 | `.sub` |
+| 技术说明 | 9.5px | 400 | `.tech` |
+| 分组标签 | 9.5px | 700 | `.tag` |
