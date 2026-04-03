@@ -122,18 +122,20 @@ Max group right must < 1140px (for right info area)
 #### 连线生成
 ```html
 <!-- 水平连线：A右中 → B左中 -->
-<line x1="A.right" y1="A.top+A.height/2" x2="B.left" y2="B.top+B.height/2"
+<line x1="A.left+A.width" y1="A.top+A.height/2"
+      x2="B.left" y2="B.top+B.height/2"
       stroke="#94a3b8" stroke-width="1.5" marker-end="url(#ah)"
       class="connection flow" />
 
-<!-- L型路径：A下中 → 拐点 → B左中 -->
-<path d="M A.cx A.bottom L A.cx 240 L B.left-20 240 L B.left-20 B.cy L B.left B.cy"
-      stroke="#059669" stroke-width="1.2" fill="none" marker-end="url(#ah-green)"
+<!-- 垂直连线：A下中 → B上中（注意：终点Y是B.top，不是B.left） -->
+<line x1="A.left+A.width/2" y1="A.top+A.height"
+      x2="B.left+B.width/2" y2="B.top"
+      stroke="#94a3b8" stroke-width="1.5" marker-end="url(#ah)"
       class="connection flow" />
 ```
-- `connection`：悬停时加粗 + 发光高亮（pointer-events 已内置）
+- `connection`：悬停时加粗 + 发光高亮
 - `flow`：2秒平滑流动动画
-- **注意**：x1,y1 和 x2,y2 必须是组件边缘锚点坐标
+- **关键**：垂直连线终点是 `B.top`（上边框），x坐标是 `B.left+B.width/2`（水平中点）
 
 #### 层级关系
 group(z-index:1) < svg(z-index:3) < box(z-index:5)
