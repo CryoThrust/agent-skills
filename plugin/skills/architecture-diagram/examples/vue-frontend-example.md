@@ -19,13 +19,17 @@
 
 | ID | Name | left | top | width | height | right | bottom |
 |----|------|------|-----|-------|--------|-------|--------|
-| G1 | Entry | 50 | 90 | 130 | 108 | 180 | 198 |
-| G2 | Router | 200 | 90 | 160 | 108 | 360 | 198 |
-| G3 | Pages | 380 | 90 | 200 | 108 | 580 | 198 |
-| G4 | Components | 600 | 90 | 200 | 108 | 800 | 198 |
-| G5 | State | 50 | 280 | 200 | 150 | 250 | 430 |
-| G6 | API | 290 | 280 | 180 | 150 | 470 | 430 |
-| G7 | Utils | 510 | 280 | 200 | 150 | 710 | 430 |
+| G1 | Entry | 50 | 90 | 130 | 122 | 180 | 212 |
+| G2 | Router | 200 | 90 | 160 | 122 | 360 | 212 |
+| G3 | Pages | 380 | 90 | 200 | 122 | 580 | 212 |
+| G4 | Components | 600 | 90 | 200 | 122 | 800 | 212 |
+| G5 | State | 50 | 280 | 200 | 158 | 250 | 438 |
+| G6 | API | 290 | 280 | 180 | 158 | 470 | 438 |
+| G7 | Utils | 510 | 280 | 200 | 158 | 710 | 438 |
+
+**分组高度计算（底部内边距16px）**：
+- G1: 26(顶) + 40(C1) + 8(间距) + 32(C2) + 16(底) = 122px
+- G5: 26(顶) + 40(Pinia) + 8 + 32(userStore) + 8 + 32(PersistedState) + 16(底) = 162px → 实际用158px
 
 ### Component Coordinates
 
@@ -74,7 +78,7 @@ body { background: var(--bg-page); display: flex; justify-content: center; paddi
 
 .wrapper { width: 100%; max-width: 1480px; }
 .canvas {
-  width: 1440px; height: 580px; position: relative;
+  width: 1440px; height: 600px; position: relative;
   background: var(--bg-canvas); border-radius: 12px; border: 1px solid var(--border);
   font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'PingFang SC', sans-serif;
   transform-origin: top left;
@@ -156,7 +160,7 @@ body { background: var(--bg-page); display: flex; justify-content: center; paddi
     <div style="position:absolute; top:60px; left:40px; right:40px; height:1px; background:#e2e8f0"></div>
 
     <!-- SVG 连线层 -->
-    <svg style="position:absolute; top:0; left:0; width:100%; height:100%; z-index:3" viewBox="0 0 1440 580">
+    <svg style="position:absolute; top:0; left:0; width:100%; height:100%; z-index:3" viewBox="0 0 1440 600">
       <defs>
         <marker id="ah" markerWidth="5" markerHeight="4" refX="5" refY="2" orient="auto">
           <polygon points="0 0, 5 2, 0 4" fill="#94a3b8" />
@@ -186,84 +190,84 @@ body { background: var(--bg-page); display: flex; justify-content: center; paddi
     </svg>
 
     <!-- Entry Group -->
-    <div class="group" style="left:50px; top:90px; width:130px; height:108px">
+    <div class="group" style="left:50px; top:90px; width:130px; height:122px">
       <span class="tag blue">用户入口</span>
     </div>
     <div class="box source" style="left:66px; top:116px; width:98px; height:40px">
       Browser<span class="tech">Web</span>
     </div>
-    <div class="box source" style="left:66px; top:160px; width:98px; height:32px">
+    <div class="box source" style="left:66px; top:164px; width:98px; height:32px">
       Mobile<span class="tech">App</span>
     </div>
 
     <!-- Router Group -->
-    <div class="group" style="left:200px; top:90px; width:160px; height:108px">
+    <div class="group" style="left:200px; top:90px; width:160px; height:122px">
       <span class="tag blue">路由层</span>
     </div>
     <div class="box" style="left:216px; top:116px; width:128px; height:40px; border-color:#3b82f6">
       Vue Router<span class="sub">路由管理</span>
     </div>
-    <div class="box dashed" style="left:216px; top:160px; width:128px; height:32px">Route Guard</div>
+    <div class="box dashed" style="left:216px; top:164px; width:128px; height:32px">Route Guard</div>
 
     <!-- Pages Group -->
-    <div class="group" style="left:380px; top:90px; width:200px; height:108px">
+    <div class="group" style="left:380px; top:90px; width:200px; height:122px">
       <span class="tag green">页面组件</span>
     </div>
     <div class="box" style="left:396px; top:116px; width:168px; height:40px; border-color:#34d399">
       Views<span class="sub">页面视图</span>
     </div>
-    <div class="box dashed" style="left:396px; top:160px; width:80px; height:32px">Home</div>
-    <div class="box dashed" style="left:480px; top:160px; width:80px; height:32px">About</div>
+    <div class="box dashed" style="left:396px; top:164px; width:80px; height:32px">Home</div>
+    <div class="box dashed" style="left:480px; top:164px; width:80px; height:32px">About</div>
 
     <!-- Components Group -->
-    <div class="group" style="left:600px; top:90px; width:200px; height:108px">
+    <div class="group" style="left:600px; top:90px; width:200px; height:122px">
       <span class="tag green">通用组件</span>
     </div>
     <div class="box" style="left:616px; top:116px; width:168px; height:40px; border-color:#34d399">
       Components<span class="sub">UI组件库</span>
     </div>
-    <div class="box dashed" style="left:616px; top:160px; width:80px; height:32px">Button</div>
-    <div class="box dashed" style="left:700px; top:160px; width:80px; height:32px">Modal</div>
+    <div class="box dashed" style="left:616px; top:164px; width:80px; height:32px">Button</div>
+    <div class="box dashed" style="left:700px; top:164px; width:80px; height:32px">Modal</div>
 
     <!-- State Management Group -->
-    <div class="group" style="left:50px; top:280px; width:200px; height:150px">
+    <div class="group" style="left:50px; top:280px; width:200px; height:160px">
       <span class="tag teal">状态管理</span>
     </div>
     <div class="box" style="left:66px; top:306px; width:168px; height:40px; border-color:#14b8a6">
       Pinia<span class="sub">Store</span>
     </div>
-    <div class="box dashed" style="left:66px; top:350px; width:80px; height:32px">userStore</div>
-    <div class="box dashed" style="left:150px; top:350px; width:80px; height:32px">appStore</div>
-    <div class="box dashed" style="left:66px; top:386px; width:168px; height:32px">PersistedState</div>
+    <div class="box dashed" style="left:66px; top:354px; width:80px; height:32px">userStore</div>
+    <div class="box dashed" style="left:150px; top:354px; width:80px; height:32px">appStore</div>
+    <div class="box dashed" style="left:66px; top:392px; width:168px; height:32px">PersistedState</div>
 
     <!-- API Layer Group -->
-    <div class="group" style="left:290px; top:280px; width:180px; height:150px">
+    <div class="group" style="left:290px; top:280px; width:180px; height:160px">
       <span class="tag violet">API 层</span>
     </div>
     <div class="box" style="left:306px; top:306px; width:148px; height:40px; border-color:#8b5cf6">
       Axios<span class="sub">HTTP Client</span>
     </div>
-    <div class="box dashed" style="left:306px; top:350px; width:148px; height:32px">Request封装</div>
-    <div class="box dashed" style="left:306px; top:386px; width:148px; height:32px">Interceptors</div>
+    <div class="box dashed" style="left:306px; top:354px; width:148px; height:32px">Request封装</div>
+    <div class="box dashed" style="left:306px; top:392px; width:148px; height:32px">Interceptors</div>
 
     <!-- Utils Group -->
-    <div class="group" style="left:510px; top:280px; width:200px; height:150px">
+    <div class="group" style="left:510px; top:280px; width:200px; height:160px">
       <span class="tag orange">工具层</span>
     </div>
     <div class="box" style="left:526px; top:306px; width:168px; height:40px; border-color:#f59e0b">
       Utils<span class="sub">工具函数</span>
     </div>
-    <div class="box dashed" style="left:526px; top:350px; width:80px; height:32px">format</div>
-    <div class="box dashed" style="left:610px; top:350px; width:80px; height:32px">validate</div>
-    <div class="box dashed" style="left:526px; top:386px; width:168px; height:32px">Composables</div>
+    <div class="box dashed" style="left:526px; top:354px; width:80px; height:32px">format</div>
+    <div class="box dashed" style="left:610px; top:354px; width:80px; height:32px">validate</div>
+    <div class="box dashed" style="left:526px; top:392px; width:168px; height:32px">Composables</div>
 
     <!-- Build Tools -->
-    <div class="enclosure" style="left:50px; top:460px; width:660px; height:70px"></div>
-    <div class="enclosure-label" style="left:65px; top:466px">构建工具</div>
-    <div class="box" style="left:65px; top:486px; width:140px; height:36px; border-color:#a7f3d0; background:#f0fdf4">Vite</div>
-    <div class="box" style="left:215px; top:486px; width:140px; height:36px; border-color:#a7f3d0; background:#f0fdf4">TypeScript</div>
-    <div class="box" style="left:365px; top:486px; width:140px; height:36px; border-color:#a7f3d0; background:#f0fdf4">ESLint</div>
-    <div class="box" style="left:515px; top:486px; width:140px; height:36px; border-color:#a7f3d0; background:#f0fdf4">Prettier</div>
+    <div class="enclosure" style="left:50px; top:470px; width:660px; height:70px"></div>
+    <div class="enclosure-label" style="left:65px; top:476px">构建工具</div>
+    <div class="box" style="left:65px; top:496px; width:140px; height:36px; border-color:#a7f3d0; background:#f0fdf4">Vite</div>
+    <div class="box" style="left:215px; top:496px; width:140px; height:36px; border-color:#a7f3d0; background:#f0fdf4">TypeScript</div>
+    <div class="box" style="left:365px; top:496px; width:140px; height:36px; border-color:#a7f3d0; background:#f0fdf4">ESLint</div>
+    <div class="box" style="left:515px; top:496px; width:140px; height:36px; border-color:#a7f3d0; background:#f0fdf4">Prettier</div>
 
     <!-- Right Info Card -->
     <div style="position:absolute; right:40px; top:90px; width:260px">
@@ -305,7 +309,7 @@ body { background: var(--bg-page); display: flex; justify-content: center; paddi
 function resize() {
   const scale = Math.min(document.querySelector('.wrapper').clientWidth / 1440, 1);
   document.querySelector('.canvas').style.transform = `scale(${scale})`;
-  document.querySelector('.wrapper').style.height = (580 * scale) + 'px';
+  document.querySelector('.wrapper').style.height = (600 * scale) + 'px';
 }
 window.addEventListener('resize', resize);
 resize();
@@ -323,5 +327,7 @@ resize();
 [x] 图例使用虚线样式 + 箭头
 [x] 图例放在标题右侧，有 pointer-events:none
 [x] 连线锚点在组件边缘（右中、左中、下中、上中）
+[x] 连线不穿过任何组件
+[x] 分组底部内边距 >= 16px
 [x] z-index: group(1) < svg(3) < box(5)
 ```

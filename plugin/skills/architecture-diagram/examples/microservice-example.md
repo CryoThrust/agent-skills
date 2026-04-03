@@ -42,15 +42,18 @@
 
 | ID | Name | left | top | width | height | right | bottom |
 |----|------|------|-----|-------|--------|-------|--------|
-| G1 | Client | 50 | 90 | 145 | 108 | 195 | 198 |
-| G2 | Gateway | 230 | 90 | 150 | 108 | 380 | 198 |
-| G3 | Services | 430 | 90 | 180 | 108 | 610 | 198 |
-| G4 | Storage | 660 | 90 | 120 | 108 | 780 | 198 |
-| G5 | Nacos | 800 | 90 | 160 | 108 | 960 | 198 |
-| G6 | RocketMQ | 50 | 280 | 180 | 190 | 230 | 470 |
-| G7 | Seata | 260 | 280 | 180 | 190 | 440 | 470 |
-| G8 | Sentinel | 470 | 280 | 180 | 190 | 650 | 470 |
-| G9 | Nacos Ext | 680 | 280 | 160 | 190 | 840 | 470 |
+| G1 | Client | 50 | 90 | 145 | 122 | 195 | 212 |
+| G2 | Gateway | 230 | 90 | 150 | 122 | 380 | 212 |
+| G3 | Services | 430 | 90 | 180 | 122 | 610 | 212 |
+| G4 | Storage | 660 | 90 | 120 | 122 | 780 | 212 |
+| G5 | Nacos | 800 | 90 | 160 | 122 | 960 | 212 |
+| G6 | RocketMQ | 50 | 280 | 180 | 168 | 230 | 448 |
+| G7 | Seata | 260 | 280 | 180 | 168 | 440 | 448 |
+| G8 | Sentinel | 470 | 280 | 180 | 168 | 650 | 448 |
+
+**分组高度计算（底部内边距16px）**：
+- 第一行分组: 26(顶) + 40(主组件) + 8(间距) + 32(子组件) + 16(底) = 122px
+- 第二行分组: 26(顶) + 36×3组件 + 8×2间距 + 16(底) = 168px
 
 ### Collision Check
 
@@ -108,7 +111,7 @@
 
   .wrapper { width: 100%; max-width: 1480px; }
   .canvas {
-    width: 1440px; height: 620px; position: relative;
+    width: 1440px; height: 580px; position: relative;
     background: var(--bg-canvas); border-radius: 12px; border: 1px solid var(--border);
     font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'PingFang SC', sans-serif;
     transform-origin: top left;
@@ -190,7 +193,7 @@
     <div style="position:absolute; top:60px; left:40px; right:40px; height:1px; background:#e2e8f0"></div>
 
     <!-- SVG 连线层（注意：不要设置 pointer-events:none，否则悬停高亮无法生效） -->
-    <svg style="position:absolute; top:0; left:0; width:100%; height:100%; z-index:3" viewBox="0 0 1440 620">
+    <svg style="position:absolute; top:0; left:0; width:100%; height:100%; z-index:3" viewBox="0 0 1440 580">
       <defs>
         <marker id="ah" markerWidth="5" markerHeight="4" refX="5" refY="2" orient="auto">
           <polygon points="0 0, 5 2, 0 4" fill="#94a3b8" />
@@ -221,65 +224,65 @@
       客户端请求<span class="tech">Browser · Mobile</span>
     </div>
 
-    <div class="group" style="left:230px; top:90px; width:150px; height:108px">
+    <div class="group" style="left:230px; top:90px; width:150px; height:122px">
       <span class="tag blue">API 网关</span>
     </div>
     <div class="box" style="left:246px; top:116px; width:118px; height:40px; border-color:#3b82f6">
       Gateway<span class="sub">路由 · 过滤</span>
     </div>
-    <div class="box dashed" style="left:246px; top:160px; width:118px; height:32px">
+    <div class="box dashed" style="left:246px; top:164px; width:118px; height:32px">
       GlobalFilter
     </div>
 
-    <div class="group" style="left:430px; top:90px; width:180px; height:108px">
+    <div class="group" style="left:430px; top:90px; width:180px; height:122px">
       <span class="tag green">微服务集群</span>
     </div>
     <div class="box" style="left:446px; top:116px; width:148px; height:40px; border-color:#34d399">
       Service Provider<span class="sub">业务服务</span>
     </div>
-    <div class="box dashed" style="left:446px; top:160px; width:72px; height:32px">OpenFeign</div>
-    <div class="box dashed" style="left:522px; top:160px; width:72px; height:32px">LB</div>
+    <div class="box dashed" style="left:446px; top:164px; width:72px; height:32px">OpenFeign</div>
+    <div class="box dashed" style="left:522px; top:164px; width:72px; height:32px">LB</div>
 
     <div class="box source" style="left:676px; top:116px; width:88px; height:40px">MySQL</div>
-    <div class="box source" style="left:676px; top:160px; width:88px; height:32px">Redis</div>
+    <div class="box source" style="left:676px; top:164px; width:88px; height:32px">Redis</div>
 
-    <div class="group" style="left:800px; top:90px; width:160px; height:108px">
+    <div class="group" style="left:800px; top:90px; width:160px; height:122px">
       <span class="tag teal">Nacos</span>
     </div>
     <div class="box" style="left:816px; top:116px; width:128px; height:40px; border-color:#14b8a6">
       注册中心<span class="sub">Registry</span>
     </div>
-    <div class="box dashed" style="left:816px; top:160px; width:128px; height:32px">配置中心</div>
+    <div class="box dashed" style="left:816px; top:164px; width:128px; height:32px">配置中心</div>
 
-    <div class="group" style="left:50px; top:280px; width:180px; height:190px">
+    <div class="group" style="left:50px; top:280px; width:180px; height:168px">
       <span class="tag violet">RocketMQ</span>
     </div>
     <div class="box" style="left:66px; top:306px; width:148px; height:36px; border-color:#8b5cf6">Producer</div>
-    <div class="box dashed" style="left:66px; top:346px; width:148px; height:36px">Broker</div>
-    <div class="box dashed" style="left:66px; top:386px; width:148px; height:36px">Consumer</div>
+    <div class="box dashed" style="left:66px; top:350px; width:148px; height:36px">Broker</div>
+    <div class="box dashed" style="left:66px; top:394px; width:148px; height:36px">Consumer</div>
 
-    <div class="group" style="left:260px; top:280px; width:180px; height:190px">
+    <div class="group" style="left:260px; top:280px; width:180px; height:168px">
       <span class="tag orange">Seata</span>
     </div>
     <div class="box" style="left:276px; top:306px; width:148px; height:36px; border-color:#f59e0b">TC 协调器</div>
-    <div class="box dashed" style="left:276px; top:346px; width:148px; height:36px">TM 管理器</div>
-    <div class="box dashed" style="left:276px; top:386px; width:148px; height:36px">RM 资源</div>
+    <div class="box dashed" style="left:276px; top:350px; width:148px; height:36px">TM 管理器</div>
+    <div class="box dashed" style="left:276px; top:394px; width:148px; height:36px">RM 资源</div>
 
-    <div class="group" style="left:470px; top:280px; width:180px; height:190px">
+    <div class="group" style="left:470px; top:280px; width:180px; height:168px">
       <span class="tag red">Sentinel</span>
     </div>
     <div class="box" style="left:486px; top:306px; width:148px; height:36px; border-color:#e11d48">流量控制</div>
-    <div class="box dashed" style="left:486px; top:346px; width:148px; height:36px">熔断降级</div>
-    <div class="box dashed" style="left:486px; top:386px; width:148px; height:36px">系统保护</div>
+    <div class="box dashed" style="left:486px; top:350px; width:148px; height:36px">熔断降级</div>
+    <div class="box dashed" style="left:486px; top:394px; width:148px; height:36px">系统保护</div>
 
-    <div class="enclosure" style="left:50px; top:510px; width:910px; height:80px"></div>
-    <div class="enclosure-label" style="left:65px; top:516px">基础设施层</div>
-    <div class="box" style="left:65px; top:536px; width:130px; height:40px; border-color:#a7f3d0; background:#f0fdf4">Skywalking</div>
-    <div class="box" style="left:210px; top:536px; width:130px; height:40px; border-color:#a7f3d0; background:#f0fdf4">Prometheus</div>
-    <div class="box" style="left:355px; top:536px; width:130px; height:40px; border-color:#a7f3d0; background:#f0fdf4">Grafana</div>
-    <div class="box" style="left:500px; top:536px; width:130px; height:40px; border-color:#a7f3d0; background:#f0fdf4">Kubernetes</div>
-    <div class="box" style="left:645px; top:536px; width:130px; height:40px; border-color:#a7f3d0; background:#f0fdf4">Docker</div>
-    <div class="box" style="left:790px; top:536px; width:130px; height:40px; border-color:#a7f3d0; background:#f0fdf4">ELK</div>
+    <div class="enclosure" style="left:50px; top:480px; width:910px; height:80px"></div>
+    <div class="enclosure-label" style="left:65px; top:486px">基础设施层</div>
+    <div class="box" style="left:65px; top:506px; width:130px; height:40px; border-color:#a7f3d0; background:#f0fdf4">Skywalking</div>
+    <div class="box" style="left:210px; top:506px; width:130px; height:40px; border-color:#a7f3d0; background:#f0fdf4">Prometheus</div>
+    <div class="box" style="left:355px; top:506px; width:130px; height:40px; border-color:#a7f3d0; background:#f0fdf4">Grafana</div>
+    <div class="box" style="left:500px; top:506px; width:130px; height:40px; border-color:#a7f3d0; background:#f0fdf4">Kubernetes</div>
+    <div class="box" style="left:645px; top:506px; width:130px; height:40px; border-color:#a7f3d0; background:#f0fdf4">Docker</div>
+    <div class="box" style="left:790px; top:506px; width:130px; height:40px; border-color:#a7f3d0; background:#f0fdf4">ELK</div>
 
     <div style="position:absolute; right:40px; top:90px; width:260px">
       <div style="border:1px solid #e2e8f0; border-radius:10px; padding:12px 14px; background:rgba(248,250,252,0.8)">
@@ -320,7 +323,7 @@
   function resize() {
     const scale = Math.min(document.querySelector('.wrapper').clientWidth / 1440, 1);
     document.querySelector('.canvas').style.transform = `scale(${scale})`;
-    document.querySelector('.wrapper').style.height = (620 * scale) + 'px';
+    document.querySelector('.wrapper').style.height = (580 * scale) + 'px';
   }
   window.addEventListener('resize', resize);
   resize();
@@ -338,6 +341,8 @@
 [x] 图例使用虚线样式 + 箭头
 [x] 图例放在标题右侧，有 pointer-events:none
 [x] 连线锚点在组件边缘
+[x] 连线不穿过任何组件
+[x] 分组底部内边距 >= 16px
 [x] z-index: group(1) < svg(3) < box(5)
 [x] All group coordinates are multiples of 10
 [x] Same-row groups don't overlap, gap >= 30px
