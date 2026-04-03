@@ -90,7 +90,50 @@ Check: xxx < 1140 OK
 
 ### Step 4: Apply Style Rules
 
-Use standardized colors, sizes, and component types defined in `references/style-guide.md`.
+**必须使用以下样式规范：**
+
+#### 颜色系统
+
+| 用途 | 背景色 | 边框色 |
+|------|--------|--------|
+| 普通组件 | #ffffff | #d1d5db |
+| 数据源/外部系统 | #f0fdfa | #5eead4 |
+| 虚线子组件 | #f8fafb | #cbd5e1 |
+| 高亮/实验特性 | #fffbeb | #f59e0b |
+| 基础设施层 | #f0fdf4 | #a7f3d0 |
+
+#### 标签颜色（分组标题）
+
+| 颜色 | 色值 | 适用场景 |
+|------|------|---------|
+| teal | #0d9488 | 注册中心、配置中心 |
+| blue | #2563eb | 网关、网络 |
+| green | #059669 | 服务集群、业务模块 |
+| red | #e11d48 | 流量治理、熔断 |
+| orange | #d97706 | 事务、调度 |
+| violet | #7c3aed | 消息队列、事件 |
+
+#### 连线颜色
+
+| 类型 | 颜色 | 色值 |
+|------|------|------|
+| 请求流 | 灰色 | #94a3b8 |
+| 服务发现 | 青色 | #0d9488 |
+| 配置同步 | 绿色 | #059669 |
+| 服务调用 | 蓝色 | #2563eb |
+| 流量治理 | 红色 | #e11d48 |
+| 事务 | 橙色 | #d97706 |
+| 消息 | 紫色 | #7c3aed |
+
+#### 组件尺寸
+
+| 类型 | 宽度 | 高度 |
+|------|------|------|
+| 小型 | 100-120px | 32-36px |
+| 标准 | 130-160px | 40-48px |
+| 大型 | 170-220px | 50-60px |
+
+详细样式见 `references/style-guide.md`。
 
 ### Step 5: Apply Layout Constraints
 
@@ -134,15 +177,54 @@ Use anchor points and path types defined in `references/layout-rules.md`.
 
 ### Step 8: Generate HTML
 
-**重要：必须基于 `references/html-template.md` 中的完整模板生成 HTML**
+**重要：必须使用以下 CSS 类和结构生成 HTML**
 
-要求：
-1. 完整复制模板中的 `<style>` 部分，不得省略
-2. 使用模板中定义的 CSS 类：`.box`, `.source`, `.dashed`, `.group`, `.tag` 等
-3. 连线颜色必须使用模板中定义的颜色对应关系
-4. 组件边框颜色必须使用模板中定义的颜色对应关系
+#### 必须使用的 CSS 类
 
-Output complete HTML file after passing all checks.
+```css
+.box          /* 普通组件 */
+.box.source   /* 数据源/外部系统组件 */
+.box.dashed   /* 虚线子组件 */
+.group        /* 分组容器 */
+.tag          /* 分组标签 */
+.tag.teal/.blue/.green/.red/.orange/.violet  /* 标签颜色 */
+.enclosure    /* 基础设施层包围框 */
+.legend       /* 图例 */
+```
+
+#### 组件内文字样式
+
+```css
+.sub          /* 次要说明文字，10px，灰色 */
+.tech         /* 技术说明文字，9.5px，浅灰色 */
+```
+
+#### SVG 连线箭头
+
+```html
+<!-- 箭头定义 -->
+<marker id="ah" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+  <polygon points="0 0, 7 2.5, 0 5" fill="#94a3b8" />
+</marker>
+
+<!-- 实线连接 -->
+<line x1="X1" y1="Y1" x2="X2" y2="Y2" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#ah)" />
+
+<!-- 虚线连接 -->
+<line ... stroke-dasharray="4,3" ... />
+```
+
+#### 响应式缩放脚本
+
+```javascript
+function resize() {
+  const scale = Math.min(wrapper.clientWidth / 1440, 1);
+  canvas.style.transform = `scale(${scale})`;
+  wrapper.style.height = (canvasHeight * scale) + 'px';
+}
+```
+
+完整模板见 `references/html-template.md`，**必须完整复制其 `<style>` 部分**。
 
 ### Step 9: Post-generation Verification
 
