@@ -115,15 +115,26 @@ Check: xxx < 1140 OK
 
 #### 连线颜色
 
-| 类型 | 颜色 | 色值 |
-|------|------|------|
-| 请求流 | 灰色 | #94a3b8 |
-| 服务发现 | 青色 | #0d9488 |
-| 配置同步 | 绿色 | #059669 |
-| 服务调用 | 蓝色 | #2563eb |
-| 流量治理 | 红色 | #e11d48 |
-| 事务 | 橙色 | #d97706 |
-| 消息 | 紫色 | #7c3aed |
+**根据连线语义选择颜色，颜色含义通用化：**
+
+| 语义类型 | 颜色 | 色值 | 适用场景示例 |
+|---------|------|------|-------------|
+| 主流程/请求流 | 灰色 | #94a3b8 | 用户请求→网关→服务、页面跳转、组件调用 |
+| 数据流/存储 | 绿色 | #059669 | 读写数据库、缓存访问、数据同步 |
+| 事件/消息 | 紫色 | #7c3aed | 消息队列、事件总线、发布订阅 |
+| 依赖/引用 | 蓝色 | #2563eb | 模块依赖、组件引用、服务调用 |
+| 治理/控制 | 红色 | #e11d48 | 熔断限流、权限控制、路由规则 |
+| 配置/元数据 | 青色 | #0d9488 | 配置中心、服务发现、环境变量 |
+| 事务/一致性 | 橙色 | #d97706 | 分布式事务、状态同步、一致性保证 |
+
+**不同架构类型的使用示例：**
+
+| 架构类型 | 主流程(灰) | 数据流(绿) | 事件(紫) | 依赖(蓝) |
+|---------|-----------|-----------|---------|---------|
+| Vue/React | 页面→组件 | Props/State | EventBus | Import引用 |
+| 微服务 | 请求→网关 | 数据库 | MQ消息 | 服务调用 |
+| 后端分层 | Controller→Service | DAO | 异步事件 | 模块依赖 |
+| 部署架构 | LB→服务器 | 数据同步 | 告警通知 | 服务依赖 |
 
 #### 组件尺寸
 
@@ -139,9 +150,78 @@ Check: xxx < 1140 OK
 
 Follow coordinate, spacing, and capacity rules defined in `references/layout-rules.md`.
 
-### Step 6: Apply Connection Rules
+### Step 6: Connection Rules (重要)
 
-Use anchor points and path types defined in `references/layout-rules.md`.
+**必须严格按照以下规则绘制连线：**
+
+#### 锚点计算
+
+每个组件有 4 个锚点（基于组件坐标计算）：
+
+| 锚点 | X 坐标 | Y 坐标 |
+|------|--------|--------|
+| 左中 | left | top + height/2 |
+| 右中 | right | top + height/2 |
+| 上中 | left + width/2 | top |
+| 下中 | left + width/2 | bottom |
+
+#### 路径类型选择
+
+根据起点和终点位置选择正确的路径类型：
+
+| 场景 | 路径类型 | 说明 |
+|------|---------|------|
+| 起点→终点：起点在终点左边，同一行 | 水平直达 | 起点右中 → 终点左中 |
+| 起点→终点：起点在终点上边，同一列 | 垂直直达 | 起点下中 → 终点上中 |
+| 起点→终点：跨行跨列 | L型路径 | 需要一个拐点 |
+| 起点→终点：多层组件连接 | 中间层路径 | 通过中间层（Y=200-280px）中转 |
+
+#### 直达路径代码
+
+```html
+<!-- 水平直达：从 A 右中 到 B 左中 -->
+<line x1="A.right" y1="A.top + A.height/2" x2="B.left" y2="B.top + B.height/2" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#ah)" />
+
+<!-- 垂直直达：从 A 下中 到 B 上中 -->
+<line x1="A.left + A.width/2" y1="A.bottom" x2="B.left + B.width/2" y2="B.top" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#ah)" />
+```
+
+#### L型路径代码（必须用 path）
+
+```html
+<!-- L型：从 A 右中 → 拐点 → B 上中/下中/左中 -->
+<!-- 拐点X 选择：起点 right + 20 或 终点 left - 20 或 中间空白区域 -->
+<!-- 拐点Y 选择：起点 Y 或 终点 Y -->
+
+<!-- 示例：A(左上) → B(右下)，拐点在 A 右边 -->
+<path d="M A.right A.top+A.height/2 L (A.right+20) (A.top+A.height/2) L (A.right+20) (B.top+B.height/2) L B.left (B.top+B.height/2)" stroke="#0d9488" stroke-width="1.2" stroke-dasharray="4,3" fill="none" marker-end="url(#ah-teal)" />
+```
+
+#### 中间层路径（跨行连接）
+
+```html
+<!-- 通过中间层（Y=240px）中转 -->
+<!-- A 下中 → (A.x, 240) → (B.x, 240) → B 上中 -->
+<path d="M (A.left+A.width/2) A.bottom L (A.left+A.width/2) 240 L (B.left+B.width/2) 240 L (B.left+B.width/2) B.top" stroke="#0d9488" stroke-width="1.2" stroke-dasharray="4,3" fill="none" marker-end="url(#ah-teal)" />
+```
+
+#### 连线避让规则
+
+1. **连线不能穿过任何组件内部**
+2. **拐点必须放在空白区域**（组件之间的间隙）
+3. **多条连线平行时间距 >= 10px**
+4. **所有坐标必须是具体数值**，不能用变量
+
+#### 连线规划表（生成前必须输出）
+
+```
+## Connection Planning
+
+| ID | From | To | Type | Anchor | Path |
+|----|------|-----|------|--------|------|
+| L1 | C1 | C2 | 直达 | C1右中→C2左中 | line(195,140)-(230,140) |
+| L2 | C2 | C3 | L型 | C2下中→C3上中 | path via (X,240) |
+```
 
 ### Step 7: Pre-generation Checklist
 
@@ -199,20 +279,31 @@ Use anchor points and path types defined in `references/layout-rules.md`.
 .tech         /* 技术说明文字，9.5px，浅灰色 */
 ```
 
-#### SVG 连线箭头
+#### SVG 连线箭头定义（放在 <defs> 中）
 
 ```html
-<!-- 箭头定义 -->
-<marker id="ah" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
-  <polygon points="0 0, 7 2.5, 0 5" fill="#94a3b8" />
-</marker>
-
-<!-- 实线连接 -->
-<line x1="X1" y1="Y1" x2="X2" y2="Y2" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#ah)" />
-
-<!-- 虚线连接 -->
-<line ... stroke-dasharray="4,3" ... />
+<defs>
+  <marker id="ah" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+    <polygon points="0 0, 7 2.5, 0 5" fill="#94a3b8" />
+  </marker>
+  <marker id="ah-teal" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+    <polygon points="0 0, 7 2.5, 0 5" fill="#0d9488" />
+  </marker>
+  <marker id="ah-red" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+    <polygon points="0 0, 7 2.5, 0 5" fill="#e11d48" />
+  </marker>
+  <!-- 其他颜色类似 -->
+</defs>
 ```
+
+#### 连线生成要求
+
+**Step 6 已经定义了锚点和路径规则，生成 HTML 时必须：**
+
+1. **先输出连线规划表**（见 Step 6）
+2. **计算具体坐标值**：把组件的 left/top/width/height 代入锚点公式
+3. **选择正确的路径类型**：直达用 `<line>`，L型用 `<path>`
+4. **拐点放在空白区域**：通常是组件之间或中间层（Y=240px）
 
 #### 响应式缩放脚本
 
