@@ -62,20 +62,28 @@ Max group right must < 1140px (for right info area)
 
 **详细布局规则见 `references/layout-rules.md`**
 
-#### 锚点计算
-| 锚点 | X 坐标 | Y 坐标 |
-|------|--------|--------|
-| 左中 | left | top + height/2 |
-| 右中 | right | top + height/2 |
-| 上中 | left + width/2 | top |
-| 下中 | left + width/2 | bottom |
+#### 锚点计算（连线必须连接到组件边缘，不能是中心）
 
-#### 路径类型
-| 场景 | 路径类型 |
-|------|---------|
-| 同行相邻 | 水平直达：起点右中 → 终点左中 |
-| 同列不同行 | 垂直直达：起点下中 → 终点上中 |
-| 跨行跨列 | L型路径（需要拐点） |
+| 锚点 | X 坐标 | Y 坐标 | 说明 |
+|------|--------|--------|------|
+| 左中 | left | top + height/2 | 组件左边框中点 |
+| 右中 | right (=left+width) | top + height/2 | 组件右边框中点 |
+| 上中 | left + width/2 | top | 组件上边框中点 |
+| 下中 | left + width/2 | bottom (=top+height) | 组件下边框中点 |
+
+**示例**：组件 left=100, top=50, width=120, height=40
+- 右中锚点：(100+120=220, 50+40/2=70)
+- 下中锚点：(100+120/2=160, 50+40=90)
+
+#### 路径类型（根据组件相对位置选择）
+
+| 场景 | 起点 | 终点 | 代码 |
+|------|------|------|------|
+| A在B左边，同行 | A右中 | B左中 | `<line x1="A.right" y1="A.cy" x2="B.left" y2="B.cy" />` |
+| A在B上边，同列 | A下中 | B上中 | `<line x1="A.cx" y1="A.bottom" x2="B.cx" y2="B.top" />` |
+| 跨行跨列 | A右中/下中 | B左中/上中 | `<path d="M A锚点 L 拐点 L B锚点" />` |
+
+**重要**：起点和终点必须是组件边缘的锚点，不是组件中心！
 
 #### 连线颜色（根据语义选择）
 | 语义 | 颜色 | 色值 |
@@ -113,11 +121,19 @@ Max group right must < 1140px (for right info area)
 
 #### 连线生成
 ```html
-<line ... class="connection flow" style="pointer-events:stroke" />
+<!-- 水平连线：A右中 → B左中 -->
+<line x1="A.right" y1="A.top+A.height/2" x2="B.left" y2="B.top+B.height/2"
+      stroke="#94a3b8" stroke-width="1.5" marker-end="url(#ah)"
+      class="connection flow" />
+
+<!-- L型路径：A下中 → 拐点 → B左中 -->
+<path d="M A.cx A.bottom L A.cx 240 L B.left-20 240 L B.left-20 B.cy L B.left B.cy"
+      stroke="#059669" stroke-width="1.2" fill="none" marker-end="url(#ah-green)"
+      class="connection flow" />
 ```
-- `connection`：悬停时加粗 + 发光高亮
+- `connection`：悬停时加粗 + 发光高亮（pointer-events 已内置）
 - `flow`：2秒平滑流动动画
-- `pointer-events:stroke`：只在线条上响应鼠标
+- **注意**：x1,y1 和 x2,y2 必须是组件边缘锚点坐标
 
 #### 层级关系
 group(z-index:1) < svg(z-index:3) < box(z-index:5)

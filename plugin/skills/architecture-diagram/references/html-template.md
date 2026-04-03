@@ -162,12 +162,13 @@ body {
 /* ========== 连线悬停高亮 ========== */
 .connection {
   cursor: pointer;
+  pointer-events: stroke;
   transition: stroke-width 0.2s, filter 0.2s;
 }
 
 .connection:hover {
   stroke-width: 2.5px;
-  filter: drop-shadow(0 0 3px currentColor);
+  filter: drop-shadow(0 0 4px currentColor);
 }
 </style>
 </head>
@@ -180,10 +181,14 @@ body {
       {架构名称} <span style="color:#94a3b8; font-size:13px; font-weight:400; margin-left:10px">{副标题}</span>
     </div>
 
+    <!-- 分隔线 -->
+    <div style="position:absolute; top:60px; left:40px; right:40px; height:1px; background:#e2e8f0"></div>
+
     <!-- 组件区域 -->
 
     <!-- SVG 连线层（层级：group < svg < box） -->
-    <svg style="position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:3" viewBox="0 0 1440 900">
+    <!-- 注意：不要设置 pointer-events:none，否则悬停高亮无法生效 -->
+    <svg class="connections" style="position:absolute; top:0; left:0; width:100%; height:100%; z-index:3" viewBox="0 0 1440 900">
       <defs>
         <marker id="ah" markerWidth="5" markerHeight="4" refX="5" refY="2" orient="auto">
           <polygon points="0 0, 5 2, 0 4" fill="#94a3b8" />
@@ -207,8 +212,8 @@ body {
           <polygon points="0 0, 5 2, 0 4" fill="#7c3aed" />
         </marker>
       </defs>
-      <!-- 连线：class="connection flow" 实现悬停高亮 + 流动效果 -->
-      <!-- <line x1="X" y1="Y" x2="X" y2="Y" stroke="#颜色" stroke-width="1.5" marker-end="url(#ah)" class="connection flow" style="pointer-events:stroke" /> -->
+      <!-- 连线示例：class="connection flow" -->
+      <!-- <line x1="起点X" y1="起点Y" x2="终点X" y2="终点Y" stroke="#颜色" stroke-width="1.5" marker-end="url(#ah)" class="connection flow" /> -->
     </svg>
 
     <!-- 图例 -->
@@ -242,9 +247,9 @@ resize();
 ## 使用规范
 
 1. **必须复制完整 style 部分**
-2. **连线类**：`class="connection flow" style="pointer-events:stroke"`
-   - `connection`：悬停高亮效果
+2. **连线类**：`class="connection flow"`
+   - `connection`：悬停时加粗 + 发光高亮（pointer-events 已内置）
    - `flow`：流动动画
-   - `pointer-events:stroke`：只在线条上响应鼠标
 3. **层级**：group(z-index:1) < svg(z-index:3) < box(z-index:5)
 4. **图例**：只显示实际使用的连线类型，颜色与 stroke 一致
+5. **注意**：SVG 上不要设置 `pointer-events:none`，否则悬停无法生效
