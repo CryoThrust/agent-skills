@@ -264,24 +264,7 @@ resize();
 
 1. **必须复制完整 style 部分**
 2. **连线类**：`class="connection flow"`
-   - `connection`：悬停时加粗 + 发光高亮
-   - `flow`：流动动画
 3. **层级**：group(z-index:1) < svg(z-index:3) < box(z-index:5)
 4. **图例**：使用 SVG 绘制虚线 + 箭头，参考模板中的 legend 部分
 5. **分隔线**：标题下方添加灰色分隔线
-
-## 锚点计算（关键！）
-
-**连线必须连接到组件边缘锚点，不能是中心！**
-
-| 场景 | 起点 | 终点 | 代码示例 |
-|------|------|------|---------|
-| 水平连线：A在B左边 | A右中 | B左中 | `x1="A.right" y1="A.top+A.h/2" x2="B.left" y2="B.top+B.h/2"` |
-| 垂直连线：A在B上边 | A下中 | B上中 | `x1="A.left+A.w/2" y1="A.bottom" x2="B.left+B.w/2" y2="B.top"` |
-
-**示例**：组件A(100,50,120,40) → 组件B(100,150,120,40) 垂直连线
-- A下中：(100+60=160, 50+40=90)
-- B上中：(100+60=160, 150)
-```html
-<line x1="160" y1="90" x2="160" y2="150" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#ah)" class="connection flow" />
-```
+6. **禁止斜线**：只能用水平线+垂直线，详见 SKILL.md 和 layout-rules.md
