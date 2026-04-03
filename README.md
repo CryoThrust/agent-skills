@@ -10,7 +10,7 @@ Generate professional HTML architecture diagrams with collision-free layout, cle
 
 **Install:**
 ```bash
-npx skills add https://github.com/Y0hanes/agent-skills --skill architecture-diagram
+npx skills add https://github.com/CryoThrust/agent-skills --skill architecture-diagram
 ```
 
 **Features:**
