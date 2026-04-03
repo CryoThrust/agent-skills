@@ -22,7 +22,7 @@ npx skills add https://github.com/CryoThrust/agent-skills --skill architecture-d
 
 **Features:**
 - Pixel-perfect layout with collision detection
-- Professional color system (7 color schemes)
+- Professional color system
 - Clear connection lines with smart routing
 - Responsive design
 - AI-driven intelligent layout
@@ -69,7 +69,7 @@ npx skills add https://github.com/CryoThrust/agent-skills --skill architecture-d
 
 **特性：**
 - 像素级精准布局，自动碰撞检测
-- 专业配色系统（7种配色方案）
+- 专业配色系统
 - 清晰的连接线，智能路由
 - 响应式设计
 - AI 驱动的智能布局
