@@ -107,10 +107,20 @@ Max group right must < 1140px (for right info area)
 .group / .tag.teal/.blue/.green/.red/.violet  /* 分组 */
 .enclosure  /* 基础设施层 */
 .legend  /* 图例 */
+.connection  /* 连线悬停高亮 */
+.flow  /* 连线流动动画 */
 ```
 
-#### 流动动画
-添加 `class="flow"` 实现线条流动效果（2秒平滑循环）
+#### 连线生成
+```html
+<line ... class="connection flow" style="pointer-events:stroke" />
+```
+- `connection`：悬停时加粗 + 发光高亮
+- `flow`：2秒平滑流动动画
+- `pointer-events:stroke`：只在线条上响应鼠标
+
+#### 层级关系
+group(z-index:1) < svg(z-index:3) < box(z-index:5)
 
 #### 图例规则
 - 只显示实际使用的连线类型

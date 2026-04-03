@@ -73,6 +73,7 @@ body {
   line-height: 1.35;
   padding: 4px 12px;
   box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+  z-index: 5;
 }
 
 .box.source { background: var(--bg-source); border-color: var(--border-source); }
@@ -89,6 +90,7 @@ body {
   border: 1.5px dashed #cbd5e1;
   border-radius: 14px;
   background: rgba(248, 250, 252, 0.6);
+  z-index: 1;
 }
 
 .tag {
@@ -156,6 +158,17 @@ body {
   stroke-dasharray: 6 10;
   animation: flow 2s linear infinite;
 }
+
+/* ========== 连线悬停高亮 ========== */
+.connection {
+  cursor: pointer;
+  transition: stroke-width 0.2s, filter 0.2s;
+}
+
+.connection:hover {
+  stroke-width: 2.5px;
+  filter: drop-shadow(0 0 3px currentColor);
+}
 </style>
 </head>
 <body>
@@ -169,32 +182,33 @@ body {
 
     <!-- 组件区域 -->
 
-    <!-- SVG 连线层（放在组件之后） -->
-    <svg style="position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:10" viewBox="0 0 1440 900">
+    <!-- SVG 连线层（层级：group < svg < box） -->
+    <svg style="position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:3" viewBox="0 0 1440 900">
       <defs>
-        <marker id="ah" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
-          <polygon points="0 0, 7 2.5, 0 5" fill="#94a3b8" />
+        <marker id="ah" markerWidth="5" markerHeight="4" refX="5" refY="2" orient="auto">
+          <polygon points="0 0, 5 2, 0 4" fill="#94a3b8" />
         </marker>
-        <marker id="ah-teal" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
-          <polygon points="0 0, 7 2.5, 0 5" fill="#0d9488" />
+        <marker id="ah-teal" markerWidth="5" markerHeight="4" refX="5" refY="2" orient="auto">
+          <polygon points="0 0, 5 2, 0 4" fill="#0d9488" />
         </marker>
-        <marker id="ah-green" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
-          <polygon points="0 0, 7 2.5, 0 5" fill="#059669" />
+        <marker id="ah-green" markerWidth="5" markerHeight="4" refX="5" refY="2" orient="auto">
+          <polygon points="0 0, 5 2, 0 4" fill="#059669" />
         </marker>
-        <marker id="ah-blue" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
-          <polygon points="0 0, 7 2.5, 0 5" fill="#2563eb" />
+        <marker id="ah-blue" markerWidth="5" markerHeight="4" refX="5" refY="2" orient="auto">
+          <polygon points="0 0, 5 2, 0 4" fill="#2563eb" />
         </marker>
-        <marker id="ah-red" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
-          <polygon points="0 0, 7 2.5, 0 5" fill="#e11d48" />
+        <marker id="ah-red" markerWidth="5" markerHeight="4" refX="5" refY="2" orient="auto">
+          <polygon points="0 0, 5 2, 0 4" fill="#e11d48" />
         </marker>
-        <marker id="ah-orange" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
-          <polygon points="0 0, 7 2.5, 0 5" fill="#d97706" />
+        <marker id="ah-orange" markerWidth="5" markerHeight="4" refX="5" refY="2" orient="auto">
+          <polygon points="0 0, 5 2, 0 4" fill="#d97706" />
         </marker>
-        <marker id="ah-violet" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
-          <polygon points="0 0, 7 2.5, 0 5" fill="#7c3aed" />
+        <marker id="ah-violet" markerWidth="5" markerHeight="4" refX="5" refY="2" orient="auto">
+          <polygon points="0 0, 5 2, 0 4" fill="#7c3aed" />
         </marker>
       </defs>
-      <!-- 连线：添加 class="flow" 实现流动效果 -->
+      <!-- 连线：class="connection flow" 实现悬停高亮 + 流动效果 -->
+      <!-- <line x1="X" y1="Y" x2="X" y2="Y" stroke="#颜色" stroke-width="1.5" marker-end="url(#ah)" class="connection flow" style="pointer-events:stroke" /> -->
     </svg>
 
     <!-- 图例 -->
@@ -228,6 +242,9 @@ resize();
 ## 使用规范
 
 1. **必须复制完整 style 部分**
-2. **流动动画**：连线添加 `class="flow"`（2秒平滑循环）
-3. **图例**：只显示实际使用的连线类型，颜色与 stroke 一致
-4. **详细颜色规则**：见 style-guide.md
+2. **连线类**：`class="connection flow" style="pointer-events:stroke"`
+   - `connection`：悬停高亮效果
+   - `flow`：流动动画
+   - `pointer-events:stroke`：只在线条上响应鼠标
+3. **层级**：group(z-index:1) < svg(z-index:3) < box(z-index:5)
+4. **图例**：只显示实际使用的连线类型，颜色与 stroke 一致

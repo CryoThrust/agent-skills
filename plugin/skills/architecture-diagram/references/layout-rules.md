@@ -36,8 +36,24 @@
 |------|---------|
 | 同行相邻分组 | 30px |
 | 同行相邻组件 | 20px |
-| 组件到分组边框 | 16px |
+| 分组内组件垂直间距 | 8px |
+| 组件到分组边框（左右） | 16px |
+| 组件到分组边框（上） | 26px（含标签空间） |
+| 组件到分组边框（下） | 16px |
 | 信息卡片垂直间距 | 20px |
+
+## Group Internal Layout
+
+```
+分组宽度 = max(组件宽度) + 32px（左右内边距）
+分组高度 = 组件高度之和 + (组件数-1)×8px + 42px（上下内边距+标签）
+
+组件定位：
+  Component.left = Group.left + 16
+  Component[0].top = Group.top + 26
+  Component[1].top = Component[0].bottom + 8
+  ...
+```
 
 ## Collision Detection
 
