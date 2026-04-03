@@ -206,6 +206,42 @@ group(z-index:1) < svg(z-index:3) < box(z-index:5)
 [ ] 响应式缩放正常
 ```
 
+#### 样式检查
+
+**box 样式完整性**：
+```
+[ ] 所有 box 都有 position:absolute
+[ ] 所有 box 都有 border、border-radius、background
+[ ] 所有 box 都有 z-index:5
+[ ] 分组 box 都有 z-index:1
+```
+
+**标题分割线**：
+```
+[ ] 标题下方存在灰色分隔线（height:1px, background:#e2e8f0）
+[ ] 分隔线位置：top:60px, left:40px, right:40px
+```
+
+**连线的 box 间距**：
+```
+[ ] 有连线关系的两个 box 水平间距 >= 40px
+[ ] 有连线关系的两个 box 垂直间距 >= 40px
+[ ] 间距过短会导致连线只剩箭头，不美观
+```
+
+**间距计算示例**：
+```
+A.right = A.left + A.width
+B.left = B.left
+间距 = B.left - A.right
+
+❌ 错误：间距 10px
+   A(right=200) → B(left=210)，连线长度只有 10px
+
+✅ 正确：间距 40px 以上
+   A(right=200) → B(left=240)，连线长度 40px
+```
+
 #### 文字宽度检查（防止换行）
 
 **问题**：文字过长会导致换行，破坏布局
